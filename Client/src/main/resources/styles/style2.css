@@ -1,0 +1,80 @@
+
+
+.background {
+    -fx-background-color: #d5f2ff;
+}
+.deal-button {
+
+    /*for not showing the background color of a button*/
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-padding: 0;
+
+
+    /*!*for the card image in the button*!*/
+    -fx-background-image: url("/images/back_flipped.png");
+    -fx-min-height: 92;
+    -fx-min-width: 133;
+    -fx-background-size: contain;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+
+    /*for the text within the button*/
+    -fx-font-size: 22px;
+    -fx-text-fill: white;
+    -fx-content-display: center;
+    -fx-alignment: center;
+}
+
+.deal-button:hover {
+    -fx-text-fill: #60d4f6;
+    -fx-border-width: 1px;
+    -fx-border-color: #60d4f6;
+}
+.deal-button:pressed {
+    -fx-text-fill: #2a002f;
+}
+
+.handle-button {
+    -fx-background-color: #72c2f6;
+    -fx-text-fill: #001b00;
+    -fx-min-width: 75;
+    -fx-min-height:50;
+    -fx-font-size: 20;
+}
+.label-color-1 {
+    -fx-text-fill: #001b00;
+}
+.card-labels {
+    -fx-text-fill: gray;
+    -fx-font-size: 27;
+}
+
+.scroll-pane {
+    -fx-background-color: #6e6868;
+    -fx-border-color: #7e7171;
+    -fx-border-width: 2px;
+}
+.scroll-pane .viewport {
+    -fx-background-color: #106c87; /* Color for the viewport area */
+}
+.scroll-pane .label {
+    -fx-text-fill: #fdfdfd;
+}
+
+.menu-bar {
+    -fx-background-color: #d2a4f1;
+    -fx-text-fill: white;
+    -fx-font-family: 'Arial';
+    -fx-font-size: 14px;
+}
+.menu {
+    -fx-background-color: #bd91dc;
+    -fx-text-fill: #521180;
+}
+.menu-item {
+    -fx-background-color: #157997;
+    -fx-text-fill: white;
+    -fx-font-family: 'Arial';
+    -fx-font-size: 12px;
+}

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<HBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="ServerMainMenuController"
+      minHeight="400" minWidth="600.0"
+      spacing="20">
+
+    <padding>
+        <Insets top="20" bottom="20" left="20" right="20"/>
+    </padding>
+
+
+    <!--Left Side that will contain Client Listview or Client Game Data-->
+
+    <!--ListView container of all clients #DEFAULT-->
+    <VBox fx:id="clientListVBox">
+        <Label text="Active Clients"/>
+        <ListView>
+            <Button text="TEST" onAction="#TESTBUTTON"/><!--TestButton REMOVE LATER-->
+            <!--TODO: implement listview-->
+        </ListView>
+    </VBox>
+
+    <!--Individual Client Date-->
+    <VBox fx:id="individualClientDataVBox" visible="false" managed="false">
+        <!--top HBox containing name of client and game status and back to client list button-->
+        <HBox >
+            <!--Client name-->
+            <Label fx:id="focusedClientName" text="Client # :"/>
+            <!--Client game status-->
+            <Label fx:id="focusedClientGameStatus" text="EXAMPLE"/>
+            <Region HBox.hgrow="ALWAYS" />
+            <!--back to client list button-->
+            <Button onAction="#handleBackToClientList" text="X" />
+
+        </HBox>
+
+        <!--bottom HBox containing client games and individual game info-->
+        <HBox>
+            <!--left side containing listview of previous games-->
+            <VBox>
+                <!--telling operator the purpose of the listview-->
+                <Label text = "Past Games"/>
+                <!--List view containing references to stats of each game played-->
+                <ListView>
+                    <!--TODO: implement adding items to this listview-->
+                </ListView>
+            </VBox>
+
+            <!--right side containing info of individual games in focus-->
+            <!--TextArea containing the info about that game-->
+            <VBox>
+                <Label text="Game #:"/>
+                <TextArea editable="false" prefRowCount="11" wrapText="true" maxWidth="300">
+                    <text>
+                        Bets:
+                        Ante Bet: 5
+                        Pair Plus Bet: 20
+                        Action:
+                        Played
+                        OutCome:
+                        Lost
+                        Total Winnings Change:
+                        -25
+                        New Total Winnings:
+                        40
+                    </text>
+                </TextArea><!--EXAMPLE TEXT-->
+            </VBox>
+        </HBox>
+    </VBox>
+
+
+    <!--Right Side that will contain more Server data ALWAYS SHOWN-->
+    <VBox>
+        <!--button that will turn off the server-->
+        <Button onAction="#handleDeactivateServerButton" text="Deactivate Server"/>
+        <!--text area that will keep a log of clients joining and leaving the server-->
+        <TextArea disable="true"/>
+        <!--container holding labels detailing number of clients-->
+        <HBox>
+            <!--Label for readability-->
+            <Label text = "Number of Clients: "/>
+            <!--dynamic label for showing the number of connected clients-->
+            <Label text="0"/><!--TODO: implement dynamic updating of label based on client numbers-->
+        </HBox>
+        <!--button for closing the server and exiting the server panel-->
+        <Button text="Shutdown Server and Menu" onAction="#handleShutdownServerAndMenu"/>
+
+
+    </VBox>
+
+</HBox>

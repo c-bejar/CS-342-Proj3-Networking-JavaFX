@@ -1,0 +1,35 @@
+Client/target/
+Client/pom.xml.tag
+Client/pom.xml.releaseBackup
+Client/pom.xml.versionsBackup
+Client/pom.xml.next
+Client/release.properties
+Client/dependency-reduced-pom.xml
+Client/buildNumber.properties
+Client/.mvn/timing.properties
+# https://github.com/takari/maven-wrapper#usage-without-binary-jar
+Client/.mvn/wrapper/maven-wrapper.jar
+
+# Eclipse m2e generated files
+# Eclipse Core
+Client/.project
+# JDT-specific (Eclipse Java Development Tools)
+Client/.classpath
+
+Server/target/
+Server/pom.xml.tag
+Server/pom.xml.releaseBackup
+Server/pom.xml.versionsBackup
+Server/pom.xml.next
+Server/release.properties
+Server/dependency-reduced-pom.xml
+Server/buildNumber.properties
+Server/.mvn/timing.properties
+# https://github.com/takari/maven-wrapper#usage-without-binary-jar
+Server/.mvn/wrapper/maven-wrapper.jar
+
+# Eclipse m2e generated files
+# Eclipse Core
+Server/.project
+# JDT-specific (Eclipse Java Development Tools)
+Server/.classpath

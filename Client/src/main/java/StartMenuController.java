@@ -12,15 +12,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
-public class StartMenuController implements Initializable {
-    @FXML
-    Label reference;
+public class StartMenuController {
+    @FXML Label reference;
 
-    public void initialize(URL location, ResourceBundle resources) {
-
-    }
-
-    @FXML
     public void handleSwitchToGamePlay() {
         //TODO need to handle the server stuff with this as well
         try {
@@ -38,10 +32,8 @@ public class StartMenuController implements Initializable {
     }
 
     //Exits the game from the start button
-    @FXML
     public void handleExitGame() {
         System.exit(0);
-
     }
 
 }

@@ -33,3 +33,41 @@ Server/.mvn/wrapper/maven-wrapper.jar
 Server/.project
 # JDT-specific (Eclipse Java Development Tools)
 Server/.classpath
+
+# Compiled class file
+Client/*.class
+Server/*.class
+
+# Log file
+Client/*.log
+Server/*.log
+
+# BlueJ files
+Client/*.ctxt
+Server/*.ctxt
+
+# Mobile Tools for Java (J2ME)
+Client/.mtj.tmp/
+Server/.mtj.tmp/
+
+# Package Files #
+Client/*.jar
+Server/*.jar
+Client/*.war
+Server/*.war
+Client/*.nar
+Server/*.nar
+Client/*.ear
+Server/*.ear
+Client/*.zip
+Server/*.zip
+Client/*.tar.gz
+Server/*.tar.gz
+Client/*.rar
+Server/*.rar
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+Client/hs_err_pid*
+Server/hs_err_pid*
+Client/replay_pid*
+Server/replay_pid*

@@ -2,19 +2,19 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.net.Socket;
+import java.util.function.Consumer;
 
 public class Client extends Thread{
-    public Socket socketClient;
-    public ObjectOutputStream out;
-    public ObjectInputStream in;
-    private PokerInfo info;
-    // private Consumer<Serializable> callback;
+    Socket socketClient;
+    ObjectOutputStream out;
+    ObjectInputStream in;
+    PokerInfo info;
+    private Consumer<Serializable> callback;
 
-    Client(String s) {
-        super(s);
+    Client(Consumer<Serializable> call) {
+        callback = call;
     }
 
-    @Override
     public void run() {
         try {
             socketClient = new Socket("127.0.0.1", 5555);

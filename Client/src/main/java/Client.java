@@ -5,10 +5,10 @@ import java.net.Socket;
 import java.util.function.Consumer;
 
 public class Client extends Thread{
-    Socket socketClient;
-    ObjectOutputStream out;
-    ObjectInputStream in;
-    PokerInfo info;
+    public Socket socketClient;
+    public ObjectOutputStream out;
+    public ObjectInputStream in;
+    public PokerInfo info;
     private Consumer<Serializable> callback;
 
     Client(Consumer<Serializable> call) {

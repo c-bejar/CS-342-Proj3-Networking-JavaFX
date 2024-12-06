@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.function.Consumer;
 
 public class Server {
-    int count = 1;
+    int count = 0;
     ArrayList<ClientThread> clients = new ArrayList<>();
     TheServer server;
     private Consumer<Serializable> callback;
@@ -19,18 +19,17 @@ public class Server {
     }
 
     public class TheServer extends Thread {
+        
         public void run() {
             try(ServerSocket mySocket = new ServerSocket(5555);) {
                 System.out.println("Server is waiting for a client!");
 
                 while(true) {
                     ClientThread c = new ClientThread(mySocket.accept(), count);
-                    callback.accept("client has connected to server: " + "client #" + count);
+                    count++;
+                    callback.accept("Client "+count+" joined the Server");
                     clients.add(c);
                     c.start();
-                    c.info = new PokerInfo(count);
-                    
-                    count++;
                 }
             } catch(Exception e) {
                 callback.accept("Server socket did not launch");
@@ -41,23 +40,13 @@ public class Server {
 
     public class ClientThread extends Thread {
         Socket connection;
-        int count;
+        int clientCount;
         ObjectOutputStream out;
         ObjectInputStream in;
 
-        ClientThread(Socket s, int count) {
+        ClientThread(Socket s, int clientCount) {
             this.connection = s;
-            this.count = count;
-        }
-
-        public void updateClients(String message) {
-            for(int i = 0; i < clients.size(); i++) {
-                ClientThread t = clients.get(i);
-                try {
-                 t.out.writeObject(message);
-                }
-                catch(Exception e) {}
-            }
+            this.clientCount = clientCount;
         }
 
         public void run() {
@@ -69,17 +58,14 @@ public class Server {
                 System.out.println("Streams not open");
             }
 
-            updateClients("new client on server: client #"+count);
-
             while(true) {
                 try {
                     String data = in.readObject().toString();
                     callback.accept("client: "+count+" sent: "+data);
-                    updateClients("client #"+count+" said: "+data);
                 } catch(Exception e) {
-                    callback.accept("Something wrong with the socket from client: "+count+"....closing down!");
-                    updateClients("Client #"+count+" has left the server!");
+                    callback.accept("Client "+count+" left the Server");
                     clients.remove(this);
+                    count--;
                     break;
                 }
             }

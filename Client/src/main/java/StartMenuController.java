@@ -39,12 +39,13 @@ public class StartMenuController implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         clientConnection = new Client(data->{
-            Platform.runLater(()->{
+            Platform.runLater(() -> {
                 System.out.println("Client Received: "+data.toString());
             });
         });
 
         clientConnection.start();
+
     }
 
 }

@@ -6,8 +6,22 @@
 
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
+      fx:controller="ServerController"
       prefHeight="400.0" prefWidth="600.0"
-      alignment="CENTER" spacing="30"
-      styleClass="background">
+      alignment="CENTER" spacing="15"
+      styleClass="root">
     <!-- start -->
+    <HBox alignment="CENTER">
+      <ScrollPane>
+
+      </ScrollPane>
+      <VBox>
+        <Button text="Activate Server"
+                fx:id="activateServer"
+                onAction="#activateServerButton"/>
+        <Label text="Clients Connected: 0"/>
+        <ScrollPane>
+        </ScrollPane>
+      </VBox>
+    </HBox>
 </VBox>

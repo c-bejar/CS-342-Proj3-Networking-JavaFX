@@ -1,11 +1,14 @@
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 import java.io.Serializable;
 import java.net.URL;
@@ -13,6 +16,7 @@ import java.util.ResourceBundle;
 import java.util.function.Consumer;
 
 public class GamePlayGUIController implements Initializable {
+    @FXML VBox root;
     @FXML Label totalWinningsLabel;
     @FXML TextField anteInputTextField;
     @FXML Label playBetLabel;
@@ -33,12 +37,27 @@ public class GamePlayGUIController implements Initializable {
 
     //for changing style sheets
     boolean s1 = true;
+
+    static boolean firstInstanceStarted = false;
+    static boolean receivedConfirmation = false;
     
     Client clientSocket;
     Consumer<Serializable> callback;
     int portNum;
 
     public void initialize(URL location, ResourceBundle resources) {
+        //TODO fix: after first ante selection, should stay the same
+        // while(true) {
+        //     if(!receivedConfirmation)
+        //         continue;
+        //     if(firstInstanceStarted && clientSocket.started) {
+        //         anteInputTextField.setDisable(true);
+        //         anteInputTextField.setText(Short.toString(clientSocket.info.anteBet));
+        //     }
+        //     if(clientSocket != null)
+        //         totalWinningsLabel.setText(Long.toString(clientSocket.info.winnings));
+        //     break;
+        // }
         //limits the size of the game log scroll view
         rightSide.maxWidthProperty().bind(outerMostHBox.widthProperty().multiply(0.5));
         //for limiting the ante bet to two digits
@@ -86,7 +105,11 @@ public class GamePlayGUIController implements Initializable {
         System.out.println("Deal Cards Pressed");
         //clientSocket.send(new PokerInfo('D',Short.valueOf(anteInputTextField.getText()),Short.valueOf(playPlusInputTextField.getText())));
         
+        if(clientSocket == null)
+            System.out.println("Client is null for some reason!");
+
         clientSocket.send(new PokerInfo('D'));
+        System.out.println("Sent command D");
         // Wait for clientSocket to have a hand
         while(true) {
             System.out.println("Client dealt hand: "+clientSocket.dealtHand);
@@ -95,6 +118,7 @@ public class GamePlayGUIController implements Initializable {
                 break;
             }
         }
+        System.out.println("Attempting to display");
         displayPlayerHand();
         clientSocket.info.setValues(ante, pp);
     }
@@ -135,7 +159,7 @@ public class GamePlayGUIController implements Initializable {
 
     @FXML //TODO Implement the handle for fresh start through the menu
     public void handleFreshStartMenuItem() {
-
+        clientSocket.info.winnings = 0;
     }
 
     @FXML //TODO Implement the handle for new look through the menu
@@ -160,14 +184,64 @@ public class GamePlayGUIController implements Initializable {
     public void handlePlayHand() {
         //TODO implement playing the hand
         System.out.println("Entered handlePlayHand()");
+        determinePPWinnings();
+
+        wlScreen();
     }
 
     @FXML
     public void handleFoldHand() {
         //TODO implement folding the hand
         System.out.println("Entered handleFoldHand()");
+        clientSocket.info.winnings -= clientSocket.info.anteBet;
+        determinePPWinnings();
+        // clientSocket.info.winnings -= clientSocket.info.PPbet;
+        
+        System.out.println("Client winnings: "+clientSocket.info.winnings);
+        wlScreen();
+    }
+
+    // used outside of this file
+    public void setClient(Client clientSocket) {
+        this.clientSocket = clientSocket;
+    }
+    
+    // used outside of this file
+    public void setAnteLabel() {
+        if(clientSocket.started) {
+            anteInputTextField.setDisable(true);
+            anteInputTextField.setText(Short.toString(clientSocket.info.anteBet));
+        }
+    }
+
+    // used outside of this file
+    public void updateWinningsLabel() {
+        totalWinningsLabel.setText(Long.toString(clientSocket.info.winnings));
+    }
+
+    public void determinePPWinnings() {
+        short pp = clientSocket.info.PPbet;
+        // clientSocket.send(new PokerInfo('B', (short)0, pp));
+        // // Wait for clientSocket to receive response
+        // while(true) {
+        //     if(!clientSocket.waiting) {
+        //         clientSocket.waiting = true;
+        //         break;
+        //     }
+        // }
         
     }
 
+    public void wlScreen() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/EndScreen.fxml"));
+            Scene gameScene = new Scene(loader.load());
+            gameScene.getStylesheets().add("/styles/endScreen.css");
+            Stage stage = (Stage) (root.getScene().getWindow());
 
+            EndScreenController controller = loader.getController();
+            controller.setClient(clientSocket);
+            stage.setScene(gameScene);
+        } catch(Exception e) {}
+    }
 }

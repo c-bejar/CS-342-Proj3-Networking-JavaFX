@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 
 import java.io.Serializable;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.function.Consumer;
 
@@ -174,10 +175,10 @@ public class GamePlayGUIController implements Initializable {
         determinePPWinnings();
         displayDealerHand();
 
-        clientSocket.info.dealerHand = clientSocket.dealersHand;
-        clientSocket.info.playerHand = clientSocket.playersHand;
-
-        clientSocket.send(clientSocket.info);
+        ArrayList<String> d = clientSocket.dealersHand;
+        ArrayList<String> p = clientSocket.playersHand;
+        
+        clientSocket.send(new PokerInfo('X', p, d));
 
         wlScreen();
     }

@@ -33,21 +33,20 @@ public class StartMenuController implements Initializable{
             clientSocket.start();
 
             //while(!clientSocket.fail) {
-                //if (clientSocket.success) {
-                    System.out.println("switchScene");
-                    //loading the other scene
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/GamePlayGUI.fxml"));
-                    Scene gameScene = new Scene(loader.load());
-                    gameScene.getStylesheets().add("/styles/style1.css");
-                    Stage stage = (Stage) (reference.getScene().getWindow());
+            //if (clientSocket.success) {
+            System.out.println("switchScene");
+            //loading the other scene
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/GamePlayGUI.fxml"));
+            Scene gameScene = new Scene(loader.load());
+            gameScene.getStylesheets().add("/styles/style1.css");
+            Stage stage = (Stage) (reference.getScene().getWindow());
 
-                    //reference to controller for sending portnum and client
-                    GamePlayGUIController controller = loader.getController();
-                    controller.setData(portNum,clientSocket);
-                    controller.setAnteLabel();
-                    stage.setScene(gameScene);
-                    //break;
-               // }
+            //reference to controller for sending portnum and client
+            GamePlayGUIController controller = loader.getController();
+            controller.setData(portNum,clientSocket);
+            stage.setScene(gameScene);
+            //break;
+            // }
             //}
 //            else {
 //                print();

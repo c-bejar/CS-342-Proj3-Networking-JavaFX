@@ -16,6 +16,13 @@
     <!--DO NOT DELETE fx:id for title label-->
     <!--Title Label-->
     <Label fx:id="reference" styleClass="title">Three Card Poker</Label>
+
+    <VBox spacing="10" alignment="CENTER">
+        <HBox alignment="CENTER"><TextField fx:id="portInput" text = "0"/></HBox>
+
+    </VBox>
+
+
     <!--VBox to hold titlescreen buttons-->
     <VBox spacing="10" alignment="CENTER" >
         <Button onAction="#handleSwitchToGamePlay" styleClass="start-menu-button">Begin</Button>

@@ -13,20 +13,21 @@ public class ServerStartMenuController implements Initializable {
     @FXML VBox sceneReference;
     @FXML TextField portNumberTF;
     public static int portNumber = 0;
-
+    // public Server serverConnection = ServerMainMenuController.serverConnection;
+    
     public void initialize(java.net.URL location, java.util.ResourceBundle resources) {
-
+        // if(serverConnection != null) {
+        //     portNumberTF.setDisable(true);
+        //     portNumberTF.setText(String.valueOf(serverConnection.server.portNum));
+        // }
     }
 
     //when server admin presses the start server button in the server start menu
     @FXML
     public void handleStartServer() {
-
         try {
-            //TODO send port number to the Server Class
-            //TODO check if valid post number before going to the next scene
-            
             portNumber = Integer.parseInt(portNumberTF.getText());
+            System.out.println("Parsed: "+portNumber);
             
             FXMLLoader loader = new FXMLLoader(getClass().getResource("FXML/server.fxml"));
             Scene serverScene = new Scene(loader.load());

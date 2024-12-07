@@ -7,11 +7,11 @@
 <?import javafx.scene.layout.*?>
 
 <VBox xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="ServerStartMenuController"
-            prefHeight="400.0" prefWidth="600.0"
-            fx:id="sceneReference" alignment="CENTER"
-            spacing="20">
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="ServerStartMenuController"
+      prefHeight="400.0" prefWidth="600.0"
+      fx:id="sceneReference" alignment="CENTER"
+      spacing="20">
     <!--textbox to set the port number TODO: limit it to be an integer number of a certain size-->
     <HBox alignment="CENTER">
         <VBox>

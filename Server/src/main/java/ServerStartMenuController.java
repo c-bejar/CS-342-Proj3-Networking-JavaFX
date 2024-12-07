@@ -14,7 +14,7 @@ public class ServerStartMenuController implements Initializable {
     @FXML TextField portNumberTF;
     public static int portNumber = 0;
     // public Server serverConnection = ServerMainMenuController.serverConnection;
-    
+
     public void initialize(java.net.URL location, java.util.ResourceBundle resources) {
         // if(serverConnection != null) {
         //     portNumberTF.setDisable(true);
@@ -28,7 +28,7 @@ public class ServerStartMenuController implements Initializable {
         try {
             portNumber = Integer.parseInt(portNumberTF.getText());
             System.out.println("Parsed: "+portNumber);
-            
+
             FXMLLoader loader = new FXMLLoader(getClass().getResource("FXML/server.fxml"));
             Scene serverScene = new Scene(loader.load());
             Stage stage = (Stage)(sceneReference.getScene().getWindow());
@@ -39,6 +39,9 @@ public class ServerStartMenuController implements Initializable {
             System.console().printf("Error: %s%n", e.getMessage());
         }
     }
+
+
+
 
     @FXML
     public void handleExit() {

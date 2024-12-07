@@ -18,30 +18,48 @@ import javafx.stage.Stage;
 public class StartMenuController implements Initializable{
     @FXML Label reference;
     @FXML TextField portInput;
-    static Client clientSocket;
+    Client clientSocket;
     static Consumer<Serializable> callback;
-    static int portNum = 0;
+    int portNum = 0;
 
     public void handleSwitchToGamePlay() {
         //TODO need to handle the server stuff with this as well
         try {
+            //get input
             portNum = Integer.parseInt(portInput.getText());
-            clientSocket = new Client(portNum, callback);
+
+            //start client
+            clientSocket = new Client(portNum,callback);
             clientSocket.start();
 
-            //TODO stop execution if cant connect
-
+            //while(!clientSocket.fail) {
+            //if (clientSocket.success) {
+            System.out.println("switchScene");
+            //loading the other scene
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/GamePlayGUI.fxml"));
             Scene gameScene = new Scene(loader.load());
             gameScene.getStylesheets().add("/styles/style1.css");
-            Stage stage = (Stage)(reference.getScene().getWindow());
+            Stage stage = (Stage) (reference.getScene().getWindow());
+
+            //reference to controller for sending portnum and client
+            GamePlayGUIController controller = loader.getController();
+            controller.setData(portNum,clientSocket);
+            controller.setAnteLabel();
             stage.setScene(gameScene);
+            //break;
+            // }
+            //}
+//            else {
+//                print();
+//            }
 
         } catch (IOException e) {
             e.printStackTrace();
             System.console().printf("Error: %s%n", e.getMessage());
         }
 
+
+        //TODO stop execution if cant connect
     }
 
     //Exits the game from the start button
@@ -51,8 +69,7 @@ public class StartMenuController implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
-        //for controlling the post number input
+        //for controlling the port number input
         portInput.setTextFormatter(new TextFormatter<String>(change -> {
             String newText = change.getControlNewText();
             if (newText.matches("\\d{0,4}")) { // Allow up to 4 digits

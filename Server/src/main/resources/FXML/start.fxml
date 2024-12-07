@@ -16,7 +16,7 @@
     <HBox alignment="CENTER">
         <VBox>
             <Label text="Enter Port Number:"/>
-            <TextField fx:id="portNumberTF"/>
+            <TextField text = "5555" fx:id="portNumberTF"/>
         </VBox>
 
     </HBox>

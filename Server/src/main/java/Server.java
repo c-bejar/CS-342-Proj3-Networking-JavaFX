@@ -8,6 +8,7 @@ import java.util.function.Consumer;
 
 public class Server {
     int count = 0;
+    int numClients = 0;
     ArrayList<ClientThread> clients = new ArrayList<>();
     TheServer server;
     boolean acceptingClients = false;
@@ -51,6 +52,7 @@ public class Server {
                         continue;
                     }
                     count++;
+                    numClients++;
                     callback.accept("Client "+count+" joined the Server"); //TODO: modify to make non overlapping IDs
                     clients.add(c);
                     c.start();
@@ -153,7 +155,7 @@ public class Server {
                 } catch(Exception e) {
                     callback.accept("Client "+count+" left the Server");
                     clients.remove(this);
-                    // count--; Should always rise to correctly distinguish clients
+                    numClients--;
                     break;
                 }
             }

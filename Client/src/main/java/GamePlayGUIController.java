@@ -1,3 +1,4 @@
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -6,22 +7,33 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-import java.awt.event.ActionListener;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class GamePlayGUIController implements Initializable {
-    @FXML Label totalWinningsLabel; @FXML TextField anteInputTextField;
-    @FXML Label playBetLabel; @FXML TextField playPlusInputTextField;
-    @FXML VBox rightSide; @FXML HBox outerMostHBox; @FXML VBox dealButtonContainer;
+    @FXML Label totalWinningsLabel;
+    @FXML TextField anteInputTextField;
+    @FXML Label playBetLabel;
+    @FXML TextField playPlusInputTextField;
+    @FXML VBox rightSide;
+    @FXML HBox outerMostHBox;
+    @FXML VBox dealButtonContainer;
     @FXML VBox playAndFoldHandButtonsContainer;
-    @FXML ImageView pC1; @FXML ImageView pC2; @FXML ImageView pC3;
-    @FXML ImageView dC1; @FXML ImageView dC2; @FXML ImageView dC3;
+    @FXML ImageView pC1;
+    @FXML ImageView pC2;
+    @FXML ImageView pC3;
+    @FXML ImageView dC1;
+    @FXML ImageView dC2;
+    @FXML ImageView dC3;
+
+    // Client clientSocket;
+    // int portNum = StartMenuController.portNum;
 
     //for changing style sheets
     boolean s1 = true;
 
     public void initialize(URL location, ResourceBundle resources) {
+        //TODO add server stuff
         //limits the size of the game log scroll view
         rightSide.maxWidthProperty().bind(outerMostHBox.widthProperty().multiply(0.5));
         //for limiting the ante bet to two digits
@@ -46,9 +58,6 @@ public class GamePlayGUIController implements Initializable {
             }
             return null; // Reject change if invalid
         }));
-
-
-
     }
 
 
@@ -61,9 +70,8 @@ public class GamePlayGUIController implements Initializable {
         playAndFoldHandButtonsContainer.setManaged(true);
         anteInputTextField.setDisable(true);
         playPlusInputTextField.setDisable(true);
-        //
 
-
+        
     }
 
     @FXML //TODO Implement the handle for fresh start through the menu

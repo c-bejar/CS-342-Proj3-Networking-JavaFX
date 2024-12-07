@@ -1,12 +1,11 @@
 import java.io.Serializable;
 
 public class PokerInfo implements Serializable{
-    public int count;
-    public String command;
-    public String playerBets;
-    public boolean foldOrPlay;
+    Player player;
+    Dealer dealer;
 
-    PokerInfo(int count) {
-        this.count = count;
+    PokerInfo() {
+        player = new Player();
+        dealer = new Dealer();
     }
 }

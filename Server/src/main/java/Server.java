@@ -12,16 +12,21 @@ public class Server {
     TheServer server;
     private Consumer<Serializable> callback;
 
-    Server(Consumer<Serializable> call) {
+    Server(int port, Consumer<Serializable> call) {
         callback = call;
-        server = new TheServer();
+        server = new TheServer(port);
         server.start();
     }
 
     public class TheServer extends Thread {
+        private int port;
+
+        TheServer(int port) {
+            this.port = port;
+        }
         
         public void run() {
-            try(ServerSocket mySocket = new ServerSocket(5555);) {
+            try(ServerSocket mySocket = new ServerSocket(port);) {
                 System.out.println("Server is waiting for a client!");
 
                 while(true) {
@@ -32,7 +37,8 @@ public class Server {
                     c.start();
                 }
             } catch(Exception e) {
-                callback.accept("Server socket did not launch");
+                e.printStackTrace();
+                System.out.println("Server socket did not launch");
             }
         }
 

@@ -1,19 +1,12 @@
-public class Card {
+import java.io.Serializable;
+
+public class Card implements Serializable{
     char suit;
     int value;
 
     Card(char suit, int value) {
-        switch(suit) {
-            case 'C':
-            case 'D':
-            case 'S':
-            case 'H':
-                this.suit = suit;
-                break;
-            default:
-                this.suit = 'X';
-                break;
-        }
+        this.suit = suit;
+        
         if(value >= 2 && value <= 14) {
             this.value = value;
         } else {

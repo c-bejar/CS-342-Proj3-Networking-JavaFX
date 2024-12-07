@@ -4,7 +4,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-
 public class JavaFXTemplate extends Application {
 
 	public static void main(String[] args) {
@@ -14,7 +13,7 @@ public class JavaFXTemplate extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		try{
-			Parent root = FXMLLoader.load(getClass().getResource("/FXML/server.fxml"));
+			Parent root = FXMLLoader.load(getClass().getResource("/FXML/start.fxml"));
 			primaryStage.setTitle("Three Card Poker [SERVER]");
 			Scene scene = new Scene(root, 800, 600);
 			scene.getStylesheets().add("/styles/server.css");

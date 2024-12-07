@@ -1,8 +1,9 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class Dealer {
+public class Dealer implements Serializable{
     Deck theDeck;
     ArrayList<Card> dealersHand;
 

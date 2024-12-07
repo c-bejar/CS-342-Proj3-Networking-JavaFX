@@ -81,6 +81,19 @@ public class Server {
 
         public void deal() {//TODO
             System.out.println("command: Deal");
+            dealer.dealersHand = dealer.dealHand();
+            player.hand = dealer.dealHand();
+            // Since the PokerInfos can't differ, we'll just parse
+            // strings to get cards
+            // Format: [Suit][Card]...#[Suit][Card]...
+            // Ex: "D8 SA CT # H2 DJ HK" just imagine the spaces aren't there
+            // Equates to: Dealer: 8 of Diamonds, Ace of Spaces, 10 of Clubs
+            //             Player: 2 of Hearts, Jack of Diamonds, King of Hearts
+            // 2-9 = 2...9     T=10, J=Jack, Q=Queen, K=King, A=Ace
+            String respectiveHands = parseCards(dealer.dealersHand, player.hand);
+            try {
+                out.writeObject(respectiveHands);
+            } catch(Exception e) {}
         }
         public void freshStart() {//TODO
             System.out.println("command: freshStart");
@@ -134,16 +147,48 @@ public class Server {
                     if(some instanceof PokerInfo) {
                         data = (PokerInfo)some;
                     }
-                    callback.accept("client: "+count+" sent data:"+data.command);
+                    callback.accept("client "+count+" sent data: "+data.command);
                     parseInputCommand(data);
 
                 } catch(Exception e) {
                     callback.accept("Client "+count+" left the Server");
                     clients.remove(this);
-                    count--;
+                    // count--; Should always rise to correctly distinguish clients
                     break;
                 }
             }
+        }
+
+        private String parseCards(ArrayList<Card> playerHand, ArrayList<Card> dealerHand) {
+            String parseHand = "";
+            for(Card c : dealerHand) {
+                String val = "?";
+                parseHand += c.suit;
+                switch(c.value) {
+                    case 10: val = "T"; break;
+                    case 11: val = "J"; break;
+                    case 12: val = "Q"; break;
+                    case 13: val = "K"; break;
+                    case 14: val = "A"; break;
+                    default: val = String.valueOf(c.value);
+                }
+                parseHand += val;
+            }
+            parseHand += "#";
+            for(Card c : playerHand) {
+                String val = "?";
+                parseHand += c.suit;
+                switch(c.value) {
+                    case 10: val = "T"; break;
+                    case 11: val = "J"; break;
+                    case 12: val = "Q"; break;
+                    case 13: val = "K"; break;
+                    case 14: val = "A"; break;
+                    default: val = String.valueOf(c.value);
+                }
+                parseHand += val;
+            }
+            return parseHand;
         }
     }
 }

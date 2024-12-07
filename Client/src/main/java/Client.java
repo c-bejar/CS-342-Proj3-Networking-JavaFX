@@ -8,7 +8,6 @@ import java.util.function.Consumer;
 public class Client extends Thread{
     ArrayList<String> playersHand;
     ArrayList<String> dealersHand;
-    PokerInfo info = new PokerInfo('x');
     boolean dealtHand = false;
     public Socket socketClient;
     public int port;
@@ -92,18 +91,18 @@ public class Client extends Thread{
 //                System.out.println("Wrote command s successfully");
 
             while(true) {
-                    PokerInfo data = null;
-                    Object some = in.readObject();
-                    dataRead = true;
-                    if (some instanceof PokerInfo) {
-                        data = (PokerInfo) some;
-                        handleInput(data);
-                        System.out.println("client: sent data:" + data.command);
-                    } else if(some instanceof String) {
-                        System.out.println("String sent!");
-                        receiveString(some);
-                    }
+                PokerInfo data = null;
+                Object some = in.readObject();
+                dataRead = true;
+                if (some instanceof PokerInfo) {
+                    data = (PokerInfo) some;
+                    handleInput(data);
+                    System.out.println("client: sent data:" + data.command);
+                } else if(some instanceof String) {
+                    System.out.println("String sent!");
+                    receiveString(some);
                 }
+            }
         } catch (Exception e) {
             System.out.println("exception in run");
             fail = true;

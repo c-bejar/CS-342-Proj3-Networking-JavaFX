@@ -1,19 +1,26 @@
 import java.io.Serializable;
 
 public class PokerInfo implements Serializable{
-    char command; //either W,L,or,''
-    long winnings = 0; //the winnings that will be sent to the client
+    //command to be sent to the server
+    char command;
 
-    //not to be used by the server, will be sent from the client
-    public short anteBet = 5;
-    public short PPbet = 0;
+//    //not to be used in this implementation, will be sent from server
+//    public String hand;
+//    public String message;
+//    public long winnings;
+//
+//    //input bets for the server
+//    public short anteBet;
+//    public short PPbet;
 
     PokerInfo(char command) {
+        System.out.println("inside poker info");
         this.command = command;
     }
 
-    void setValues(short ante, short pp) {
-        anteBet = ante;
-        PPbet = pp;
-    }
+//    PokerInfo(char command, short anteBet, short PPbet) {
+//        this.command = command;
+//        this.anteBet = anteBet;
+//        this.PPbet = PPbet;
+//    }
 }

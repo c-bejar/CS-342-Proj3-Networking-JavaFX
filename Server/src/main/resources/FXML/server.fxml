@@ -56,7 +56,6 @@
             <VBox>
                 <Label text="Game: #" fx:id = "gameFocus"/>
                 <TextArea editable="false" prefRowCount="11" wrapText="true" maxWidth="300" fx:id="TA"/>
-
             </VBox>
         </HBox>
     </VBox>

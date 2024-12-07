@@ -25,12 +25,10 @@ public class ServerMainMenuController implements Initializable {
     @FXML private ListView clientList;
     @FXML private VBox clientJoinLog;
     @FXML private Label clientsLabel;
-
     @FXML private TextArea TA;
     @FXML private Label focusedClientName;
     @FXML private Label gameFocus;
     @FXML private ListView gameList;
-
 
     public static Server serverConnection;
     public static int portNum = ServerStartMenuController.portNumber;

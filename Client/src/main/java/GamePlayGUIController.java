@@ -46,18 +46,6 @@ public class GamePlayGUIController implements Initializable {
     int portNum;
 
     public void initialize(URL location, ResourceBundle resources) {
-        //TODO fix: after first ante selection, should stay the same
-        // while(true) {
-        //     if(!receivedConfirmation)
-        //         continue;
-        //     if(firstInstanceStarted && clientSocket.started) {
-        //         anteInputTextField.setDisable(true);
-        //         anteInputTextField.setText(Short.toString(clientSocket.info.anteBet));
-        //     }
-        //     if(clientSocket != null)
-        //         totalWinningsLabel.setText(Long.toString(clientSocket.info.winnings));
-        //     break;
-        // }
         //limits the size of the game log scroll view
         rightSide.maxWidthProperty().bind(outerMostHBox.widthProperty().multiply(0.5));
         //for limiting the ante bet to two digits
@@ -82,7 +70,6 @@ public class GamePlayGUIController implements Initializable {
             }
             return null; // Reject change if invalid
         }));
-        // System.out.println("clientSocket: " + clientSocket.port);
     }
 
 
@@ -91,7 +78,7 @@ public class GamePlayGUIController implements Initializable {
         short ante = Short.parseShort(anteInputTextField.getText());
         short pp = Short.parseShort(playPlusInputTextField.getText());
         if(ante > 25 || ante < 5 ||
-                pp > 25 || (pp != 0 && pp < 5)) {
+             pp > 25 || (pp != 0 && pp < 5)) {
             return;
         }
         //hiding the deal button
@@ -127,7 +114,7 @@ public class GamePlayGUIController implements Initializable {
         pC1.setImage(new Image(parseCardName(clientSocket.playersHand.get(0))));
         pC2.setImage(new Image(parseCardName(clientSocket.playersHand.get(1))));
         pC3.setImage(new Image(parseCardName(clientSocket.playersHand.get(2))));
-
+        
     }
 
     public void displayDealerHand() {
@@ -185,6 +172,12 @@ public class GamePlayGUIController implements Initializable {
         //TODO implement playing the hand
         System.out.println("Entered handlePlayHand()");
         determinePPWinnings();
+        displayDealerHand();
+
+        clientSocket.info.dealerHand = clientSocket.dealersHand;
+        clientSocket.info.playerHand = clientSocket.playersHand;
+
+        clientSocket.send(clientSocket.info);
 
         wlScreen();
     }
@@ -231,7 +224,6 @@ public class GamePlayGUIController implements Initializable {
         //         break;
         //     }
         // }
-
     }
 
     public void wlScreen() {

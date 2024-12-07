@@ -48,6 +48,7 @@ public class StartMenuController implements Initializable{
             stage.setScene(gameScene);
             //break;
             // }
+
             //}
 //            else {
 //                print();

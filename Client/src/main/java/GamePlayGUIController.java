@@ -25,6 +25,8 @@ public class GamePlayGUIController implements Initializable {
     @FXML ImageView dC2;
     @FXML ImageView dC3;
 
+    int portNum = StartMenuController.portNum;
+
     //for changing style sheets
     boolean s1 = true;
 
@@ -53,9 +55,6 @@ public class GamePlayGUIController implements Initializable {
             }
             return null; // Reject change if invalid
         }));
-
-
-
     }
 
 
@@ -68,7 +67,6 @@ public class GamePlayGUIController implements Initializable {
         playAndFoldHandButtonsContainer.setManaged(true);
         anteInputTextField.setDisable(true);
         playPlusInputTextField.setDisable(true);
-        //
 
 
     }

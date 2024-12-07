@@ -9,15 +9,17 @@ public class Client extends Thread{
     public ObjectOutputStream out;
     public ObjectInputStream in;
     public PokerInfo info;
+    public int port;
     private Consumer<Serializable> callback;
 
-    Client(Consumer<Serializable> call) {
+    Client(int port, Consumer<Serializable> call) {
+        this.port = port;
         callback = call;
     }
 
     public void run() {
         try {
-            socketClient = new Socket("127.0.0.1", 5555);
+            socketClient = new Socket("127.0.0.1", port);
             out = new ObjectOutputStream(socketClient.getOutputStream());
             in = new ObjectInputStream(socketClient.getInputStream());
             socketClient.setTcpNoDelay(true);

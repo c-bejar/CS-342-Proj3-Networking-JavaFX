@@ -9,11 +9,13 @@ import java.util.ResourceBundle;
 
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
 import javafx.stage.Stage;
 
 public class StartMenuController implements Initializable{
     @FXML Label reference;
-    Client clientConnection;
+    @FXML TextField portInput;
 
     public void handleSwitchToGamePlay() {
         //TODO need to handle the server stuff with this as well
@@ -38,13 +40,18 @@ public class StartMenuController implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        clientConnection = new Client(data->{
-            Platform.runLater(() -> {
-                System.out.println("Client Received: "+data.toString());
-            });
-        });
 
-        clientConnection.start();
+        //for controlling the post number input
+        portInput.setTextFormatter(new TextFormatter<String>(change -> {
+            String newText = change.getControlNewText();
+            if (newText.matches("\\d{0,4}")) { // Allow up to 4 digits
+                return change;
+            }
+            else if (newText == "0" && portInput.getText().isEmpty()) {
+                return change;
+            }
+            return null; // Reject change if invalid
+        }));
 
     }
 

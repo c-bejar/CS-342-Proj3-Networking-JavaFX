@@ -19,14 +19,16 @@ public class Server {
     }
 
     public class TheServer extends Thread {
-        private int port;
+        int portNum = 5555;
 
         TheServer(int port) {
-            this.port = port;
+            portNum = port;
+            System.out.println("Constructor port: "+portNum);
         }
         
         public void run() {
-            try(ServerSocket mySocket = new ServerSocket(port);) {
+            try(ServerSocket mySocket = new ServerSocket(portNum);) {
+                System.out.println("Server using port "+portNum);
                 System.out.println("Server is waiting for a client!");
 
                 while(true) {

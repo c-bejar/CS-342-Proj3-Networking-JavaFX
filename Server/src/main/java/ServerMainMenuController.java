@@ -15,9 +15,10 @@ public class ServerMainMenuController implements Initializable {
     @FXML private ListView clientJoinLog;
     @FXML private Label clientsLabel;
     public Server serverConnection;
-    public int portNum = ServerStartMenuController.portNum;
+    public static int portNum = ServerStartMenuController.portNumber;
 
     public void initialize(URL location, ResourceBundle resources) {
+        System.out.println("Intitialized port: "+portNum);
         serverConnection = new Server(portNum, data -> {
             Platform.runLater(() -> {
                 System.out.println("Server Received: "+data.toString());

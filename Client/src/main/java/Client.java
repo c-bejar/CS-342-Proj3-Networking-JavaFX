@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.function.Consumer;
 
 public class Client extends Thread{
-
     ArrayList<String> playersHand;
     ArrayList<String> dealersHand;
     boolean dealtHand = false;
@@ -100,8 +99,8 @@ public class Client extends Thread{
                         handleInput(data);
                         System.out.println("client: sent data:" + data.command);
                     } else if(some instanceof String) {
-                        receiveString(some);
                         System.out.println("String sent!");
+                        receiveString(some);
                     }
                 }
         } catch (Exception e) {

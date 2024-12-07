@@ -10,30 +10,46 @@ public class Server {
     int count = 0;
     ArrayList<ClientThread> clients = new ArrayList<>();
     TheServer server;
+    boolean acceptingClients = false;
     private Consumer<Serializable> callback;
 
     Server(int port, Consumer<Serializable> call) {
         callback = call;
         server = new TheServer(port);
-        System.out.println("");
         server.start();
     }
 
+    public void shutdown() {
+        try {
+            acceptingClients = false;
+            for(ClientThread client: clients) {
+                client.connection.close();
+                client.in.close();
+                client.out.close();
+                client.interrupt();
+            }
+        } catch(Exception e) {}
+    }
+
     public class TheServer extends Thread {
-        int portNum = 5555;
+        int portNum = 0;
 
         TheServer(int port) {
             portNum = port;
-            System.out.println("Constructor port: "+portNum);
         }
         
         public void run() {
             try(ServerSocket mySocket = new ServerSocket(portNum);) {
+                acceptingClients = true;
                 System.out.println("Server using port "+portNum);
                 System.out.println("Server is waiting for a client!");
 
                 while(true) {
                     ClientThread c = new ClientThread(mySocket.accept(), count);
+                    if(!acceptingClients) {
+                        shutdown();
+                        continue;
+                    }
                     count++;
                     callback.accept("Client "+count+" joined the Server");
                     clients.add(c);

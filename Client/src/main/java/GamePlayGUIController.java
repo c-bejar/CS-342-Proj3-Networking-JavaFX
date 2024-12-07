@@ -1,3 +1,4 @@
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -25,12 +26,14 @@ public class GamePlayGUIController implements Initializable {
     @FXML ImageView dC2;
     @FXML ImageView dC3;
 
-    int portNum = StartMenuController.portNum;
+    // Client clientSocket;
+    // int portNum = StartMenuController.portNum;
 
     //for changing style sheets
     boolean s1 = true;
 
     public void initialize(URL location, ResourceBundle resources) {
+        
         //limits the size of the game log scroll view
         rightSide.maxWidthProperty().bind(outerMostHBox.widthProperty().multiply(0.5));
         //for limiting the ante bet to two digits

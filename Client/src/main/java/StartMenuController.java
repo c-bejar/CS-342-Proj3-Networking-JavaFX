@@ -16,12 +16,30 @@ import javafx.stage.Stage;
 public class StartMenuController implements Initializable{
     @FXML Label reference;
     @FXML TextField portInput;
+    static Client clientSocket;
     static int portNum = 0;
 
     public void handleSwitchToGamePlay() {
         //TODO need to handle the server stuff with this as well
         try {
-            portNum = Integer.parseInt(portInput.getText());
+            while(true) {
+                System.out.println("New Loop");
+                portNum = Integer.parseInt(portInput.getText());
+                clientSocket = new Client(portNum, data -> {
+                    Platform.runLater(() -> {
+                        //TODO maybe something with data
+                    });
+                });
+        
+                clientSocket.start();
+                
+                System.out.println("Client connected? "+clientSocket.isConnected);
+                if(!clientSocket.isConnected) {
+                    break;
+                }
+            }
+            System.out.println("Exited loop!");
+
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/GamePlayGUI.fxml"));
             Scene gameScene = new Scene(loader.load());
             gameScene.getStylesheets().add("/styles/style1.css");

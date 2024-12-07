@@ -85,6 +85,7 @@ public class Server {
             System.out.println("command: Deal");
             dealer.dealersHand = dealer.dealHand();
             player.hand = dealer.dealHand();
+            System.out.println("dealt new hand");
             // Since the PokerInfos can't differ, we'll just parse
             // strings to get cards
             // Format: [Suit][Card]...#[Suit][Card]...
@@ -93,6 +94,7 @@ public class Server {
             //             Player: 2 of Hearts, Jack of Diamonds, King of Hearts
             // 2-9 = 2...9     T=10, J=Jack, Q=Queen, K=King, A=Ace
             String respectiveHands = parseCards(dealer.dealersHand, player.hand);
+            System.out.println("Created String for hands: "+respectiveHands);
             try {
                 out.writeObject(respectiveHands);
             } catch(Exception e) {}
@@ -109,8 +111,13 @@ public class Server {
         public void play() {//TODO
             System.out.println("command: play");
         }
+        public void ppWinnings() {//TODO
+            System.out.println("command: ppWinnings");
+            
+        }
 
         void parseInputCommand(PokerInfo data) {
+            System.out.println("Command sent to Server: "+data.command);
             switch(data.command) {
                 case 'D':
                     deal();
@@ -126,6 +133,9 @@ public class Server {
                     break;
                 case 'P':
                     play();
+                    break;
+                case 'B':
+                    ppWinnings();
                     break;
                 default: System.out.println("invalid command");
             }
@@ -148,6 +158,8 @@ public class Server {
 
                     if(some instanceof PokerInfo) {
                         data = (PokerInfo)some;
+                    } else {
+                        System.out.println("Unrecognized format");
                     }
                     callback.accept("client "+count+" sent data: "+data.command);
                     parseInputCommand(data);

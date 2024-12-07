@@ -84,6 +84,7 @@ public class GamePlayGUIController implements Initializable {
         clientSocket.send(new PokerInfo('D'));
         // Wait for clientSocket to have a hand
         while(true) {
+            System.out.println("Client Hand Dealt: "+clientSocket.dealtHand);
             if(clientSocket.dealtHand) {
                 clientSocket.dealtHand = false;
                 break;
@@ -93,9 +94,9 @@ public class GamePlayGUIController implements Initializable {
     }
 
     public void displayHands() {
-        dC1.setImage(new Image(parseCardName(clientSocket.dealersHand.get(0))));
-        dC2.setImage(new Image(parseCardName(clientSocket.dealersHand.get(1))));
-        dC3.setImage(new Image(parseCardName(clientSocket.dealersHand.get(2))));
+        // dC1.setImage(new Image(parseCardName(clientSocket.dealersHand.get(0))));
+        // dC2.setImage(new Image(parseCardName(clientSocket.dealersHand.get(1))));
+        // dC3.setImage(new Image(parseCardName(clientSocket.dealersHand.get(2))));
         pC1.setImage(new Image(parseCardName(clientSocket.playersHand.get(0))));
         pC2.setImage(new Image(parseCardName(clientSocket.playersHand.get(1))));
         pC3.setImage(new Image(parseCardName(clientSocket.playersHand.get(2))));

@@ -89,11 +89,12 @@
                 fx:id="onOffServer"
                 onAction="#handleDeactivateServerButton"/>
         <!--text area that will keep a log of clients joining and leaving the server-->
-        <ScrollPane>
+        <ScrollPane prefHeight="400"
+                    prefWidth="350">
             <content>
-                <ListView fx:id="clientJoinLog">
+                <VBox fx:id="clientJoinLog">
                     <!-- Add clients programatically with labels -->
-                </ListView>
+                </VBox>
             </content>
         </ScrollPane>
         <!--Label for readability-->

@@ -10,7 +10,6 @@ public class Client extends Thread{
     public ObjectInputStream in;
     public PokerInfo info;
     public int port;
-    public boolean isConnected = false;
     private Consumer<Serializable> callback;
 
     Client(int port, Consumer<Serializable> call) {
@@ -21,7 +20,6 @@ public class Client extends Thread{
     public void run() {
         try {
             socketClient = new Socket("127.0.0.1", port);
-            isConnected = true;
             System.out.println("Client using port "+port);
             out = new ObjectOutputStream(socketClient.getOutputStream());
             in = new ObjectInputStream(socketClient.getInputStream());
@@ -31,7 +29,7 @@ public class Client extends Thread{
         while(true) {
             try {
                 String message = in.readObject().toString();
-                callback.accept(message);
+                System.out.println("Received: "+message);
             } catch(Exception e) {}
         }
     }

@@ -9,7 +9,9 @@ public class Client extends Thread{
     ArrayList<String> playersHand;
     ArrayList<String> dealersHand;
     PokerInfo info = new PokerInfo('x');
+    boolean started = false;
     boolean dealtHand = false;
+    boolean waiting = true;
     public Socket socketClient;
     public int port;
     private Consumer<Serializable> callback;
@@ -54,9 +56,12 @@ public class Client extends Thread{
                 playerHand.add(card3);
             }
         }
+        System.out.println("Before dealing dealer: "+dealersHand);
+        System.out.println("Before dealing player: "+playersHand);
         dealersHand = dealerHand;
         playersHand = playerHand;
         dealtHand = true;
+        started = true;
         System.out.println("Finished creating arrays for hands");
     }
 

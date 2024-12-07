@@ -8,6 +8,7 @@ import java.util.function.Consumer;
 public class Client extends Thread{
     ArrayList<String> playersHand;
     ArrayList<String> dealersHand;
+    PokerInfo info = new PokerInfo('x');
     boolean dealtHand = false;
     public Socket socketClient;
     public int port;

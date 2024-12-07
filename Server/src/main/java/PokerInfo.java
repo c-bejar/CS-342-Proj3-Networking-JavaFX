@@ -12,6 +12,12 @@ public class PokerInfo implements Serializable{
         this.command = command;
     }
 
+    PokerInfo(char command, short ante, short pp) {
+        this.command = command;
+        anteBet = ante;
+        PPbet = pp;
+    }
+
     void setValues(short ante, short pp) {
         anteBet = ante;
         PPbet = pp;

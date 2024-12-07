@@ -54,6 +54,7 @@ public class StartMenuController implements Initializable{
             }
             return null; // Reject change if invalid
         }));
+
     }
 
 }

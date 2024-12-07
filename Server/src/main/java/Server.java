@@ -15,6 +15,7 @@ public class Server {
     Server(int port, Consumer<Serializable> call) {
         callback = call;
         server = new TheServer(port);
+        System.out.println("");
         server.start();
     }
 

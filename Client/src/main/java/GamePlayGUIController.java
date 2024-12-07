@@ -33,7 +33,7 @@ public class GamePlayGUIController implements Initializable {
     boolean s1 = true;
 
     public void initialize(URL location, ResourceBundle resources) {
-        
+        //TODO add server stuff
         //limits the size of the game log scroll view
         rightSide.maxWidthProperty().bind(outerMostHBox.widthProperty().multiply(0.5));
         //for limiting the ante bet to two digits
@@ -71,7 +71,7 @@ public class GamePlayGUIController implements Initializable {
         anteInputTextField.setDisable(true);
         playPlusInputTextField.setDisable(true);
 
-
+        
     }
 
     @FXML //TODO Implement the handle for fresh start through the menu

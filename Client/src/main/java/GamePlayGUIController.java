@@ -33,6 +33,7 @@ public class GamePlayGUIController implements Initializable {
 
     //for changing style sheets
     boolean s1 = true;
+    
     Client clientSocket;
     Consumer<Serializable> callback;
     int portNum;
@@ -79,8 +80,40 @@ public class GamePlayGUIController implements Initializable {
 
         System.out.println("Deal Cards Pressed");
         //clientSocket.send(new PokerInfo('D',Short.valueOf(anteInputTextField.getText()),Short.valueOf(playPlusInputTextField.getText())));
+        
         clientSocket.send(new PokerInfo('D'));
-        System.out.println("done sending deal cards command");
+        // Wait for clientSocket to have a hand
+        while(true) {
+            if(clientSocket.dealtHand) {
+                clientSocket.dealtHand = false;
+                break;
+            }
+        }
+        displayHands();
+    }
+
+    public void displayHands() {
+        dC1.setImage(new Image(parseCardName(clientSocket.dealersHand.get(0))));
+        dC2.setImage(new Image(parseCardName(clientSocket.dealersHand.get(1))));
+        dC3.setImage(new Image(parseCardName(clientSocket.dealersHand.get(2))));
+        pC1.setImage(new Image(parseCardName(clientSocket.playersHand.get(0))));
+        pC2.setImage(new Image(parseCardName(clientSocket.playersHand.get(1))));
+        pC3.setImage(new Image(parseCardName(clientSocket.playersHand.get(2))));
+        
+    }
+
+    public String parseCardName(String str) {
+        String suit = str.substring(0, 1);
+        String value = str.substring(1, 2);
+        switch(value) {
+            case "T": value = "10"; break;
+            case "J": value = "11"; break;
+            case "Q": value = "12"; break;
+            case "K": value = "13"; break;
+            case "A": value = "14"; break;
+            default: break;
+        }
+        return "/images/"+value+"of"+suit+".png";
     }
 
     public void setData(int port, Client clientSocket) {

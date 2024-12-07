@@ -8,7 +8,7 @@ public class EndScreenController {
     @FXML VBox root;
 
     Client clientSocket;
-    
+
     public void handleRetry() {
         System.out.println("Attempting retry!");
         try {

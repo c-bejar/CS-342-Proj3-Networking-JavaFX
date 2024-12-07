@@ -40,7 +40,7 @@ public class GamePlayGUIController implements Initializable {
 
     static boolean firstInstanceStarted = false;
     static boolean receivedConfirmation = false;
-    
+
     Client clientSocket;
     Consumer<Serializable> callback;
     int portNum;
@@ -70,7 +70,6 @@ public class GamePlayGUIController implements Initializable {
             }
             return null; // Reject change if invalid
         }));
-       // System.out.println("clientSocket: " + clientSocket.port);
     }
 
 
@@ -92,7 +91,7 @@ public class GamePlayGUIController implements Initializable {
 
         System.out.println("Deal Cards Pressed");
         //clientSocket.send(new PokerInfo('D',Short.valueOf(anteInputTextField.getText()),Short.valueOf(playPlusInputTextField.getText())));
-        
+
         if(clientSocket == null)
             System.out.println("Client is null for some reason!");
 
@@ -100,7 +99,7 @@ public class GamePlayGUIController implements Initializable {
         System.out.println("Sent command D");
         // Wait for clientSocket to have a hand
         while(true) {
-            // System.out.println("Client dealt hand: "+clientSocket.dealtHand);
+            System.out.println("Client dealt hand: "+clientSocket.dealtHand);
             if(clientSocket.dealtHand) {
                 clientSocket.dealtHand = false;
                 break;
@@ -190,7 +189,9 @@ public class GamePlayGUIController implements Initializable {
         clientSocket.info.winnings -= clientSocket.info.anteBet;
         determinePPWinnings();
         // clientSocket.info.winnings -= clientSocket.info.PPbet;
-        
+
+        clientSocket.send(new PokerInfo('F'));
+
         System.out.println("Client winnings: "+clientSocket.info.winnings);
         wlScreen();
     }
@@ -199,7 +200,7 @@ public class GamePlayGUIController implements Initializable {
     public void setClient(Client clientSocket) {
         this.clientSocket = clientSocket;
     }
-    
+
     // used outside of this file
     public void setAnteLabel() {
         if(clientSocket.started) {
@@ -223,7 +224,6 @@ public class GamePlayGUIController implements Initializable {
         //         break;
         //     }
         // }
-        
     }
 
     public void wlScreen() {

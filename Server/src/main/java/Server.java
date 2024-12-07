@@ -1,3 +1,8 @@
+import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.control.Label;
+
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
@@ -10,10 +15,12 @@ import java.util.function.Consumer;
 public class Server {
     int count = 0;
     int numClients = 0;
+    int topClientID  = 0;
     ArrayList<ClientThread> clients = new ArrayList<>();
     TheServer server;
     boolean acceptingClients = false;
     private Consumer<Serializable> callback;
+    ObservableList<Label> displayedClients = FXCollections.observableArrayList();//array list for holding displayed client content
 
     Server(int port, Consumer<Serializable> call) {//creates server thread and starts the server operation
         callback = call;
@@ -29,6 +36,7 @@ public class Server {
                 client.in.close();
                 client.out.close();
                 client.interrupt();
+                topClientID = 0;
             }
         } catch(Exception e) {}
     }
@@ -47,15 +55,22 @@ public class Server {
                 System.out.println("Server is waiting for a client!");
 
                 while(true) {//keeps creating client threads when clients join
-                    ClientThread c = new ClientThread(mySocket.accept(), count);
+                    ClientThread c = new ClientThread(mySocket.accept(), count,topClientID);
                     if(!acceptingClients) {//stops accepting clients if the server is off
                         shutdown();
                         continue;
                     }
                     count++;
                     numClients++;
-                    callback.accept("Client "+count+" joined the Server"); //TODO: modify to make non overlapping IDs
+                    topClientID++;
+                    callback.accept("Client "+c.clientID+" joined the Server"); //TODO: modify to make non overlapping IDs
                     clients.add(c);
+                    Platform.runLater(() -> {
+                        c.displayedLabel = new Label("client: "+c.clientID);
+                        //array list for holding displayed client content
+                        c.displayedLabel.setUserData(c.displayGames);
+                        displayedClients.add(c.displayedLabel);
+                    });
                     c.start();
                 }
             } catch(Exception e) {
@@ -76,14 +91,26 @@ public class Server {
         int clientCount;
         ObjectOutputStream out;
         ObjectInputStream in;
+        int clientID;
+        int gameNum = 0;
 
-        ClientThread(Socket s, int clientCount) {
+        Label displayedLabel;//holding client info
+        ObservableList<Label> displayGames = FXCollections.observableArrayList();//holding game ui stuff
+
+
+
+
+        ClientThread(Socket s, int clientCount, int topClientID) {
             this.connection = s;
             this.clientCount = clientCount;
+            clientID = topClientID;
         }
 
         public void deal() {//TODO
             System.out.println("command: Deal");
+
+            gameNum += 1;
+          
             dealer.dealersHand = dealer.dealHand();
             player.hand = dealer.dealHand();
             System.out.println("dealt new hand");
@@ -107,7 +134,23 @@ public class Server {
             System.out.println("command: endGame");
         }
         public void fold() {//TODO
-            System.out.println("command: Fold");
+            System.out.println("start in fold()");
+            Platform.runLater(() -> {
+                System.out.println("in fold run later");
+                Label temp = new Label("Game: " + gameNum);
+                String tempString = "Ante Bet: 5\n" +
+                        "PairPlus Bet: 20\n" +
+                        "Action: Fold\n" +
+                        "OutCome: Lost\n" +
+                        "Total Winnings Change: -25\n" +
+                        "New Total Winnings: 40";
+                System.out.println("before set user data");
+                temp.setUserData(tempString);
+                System.out.println("before add to displayGames");
+                displayGames.add(temp);
+                System.out.println("after add to displayGames");
+            });
+            System.out.println("end in fold()");
         }
         public void play(PokerInfo data) {//TODO
             System.out.println("command: play");
@@ -202,17 +245,23 @@ public class Server {
                     Object some = in.readObject();
 
                     if(some instanceof PokerInfo) {
-                        data = ((PokerInfo)some);
+                        data = (PokerInfo)some;
                     } else {
                         System.out.println("Unrecognized format");
                     }
-                    callback.accept("client "+count+" sent data: "+data.command);
+                    callback.accept("client "+clientID+" sent data: "+data.command);
                     parseInputCommand(data);
 
                 } catch(Exception e) {
-                    callback.accept("Client "+count+" left the Server");
-                    clients.remove(this);
-                    numClients--;
+                    callback.accept("Client "+clientID+" left the Server");
+                    synchronized (this) {
+                        // Critical section
+                        Platform.runLater(() -> {
+                            displayedClients.remove(displayedLabel);
+                        });
+                        clients.remove(this);
+                        numClients--;
+                    }
                     break;
                 }
             }

@@ -1,7 +1,9 @@
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
 import javafx.application.Platform;
@@ -23,6 +25,11 @@ public class ServerMainMenuController implements Initializable {
     @FXML private ListView clientList;
     @FXML private VBox clientJoinLog;
     @FXML private Label clientsLabel;
+    @FXML private TextArea TA;
+    @FXML private Label focusedClientName;
+    @FXML private Label gameFocus;
+    @FXML private ListView gameList;
+
     public static Server serverConnection;
     public static int portNum = ServerStartMenuController.portNumber;
 
@@ -37,16 +44,35 @@ public class ServerMainMenuController implements Initializable {
                 clientsLabel.setText("Clients Connected: "+serverConnection.numClients);
             });
         });
-    }
 
+        clientList.setItems(serverConnection.displayedClients);
+        clientList.setOnMouseClicked(event -> { //click on a client
+            Label selectedItem = (Label)(clientList.getSelectionModel().getSelectedItem());
+            if (selectedItem != null) {
+                gameList.setItems((ObservableList)(selectedItem.getUserData()));
+                gameList.getItems();
+                System.out.println("clicked: "+selectedItem.getText());
+                focusedClientName.setText(selectedItem.getText());
+                //visibility
+                individualClientDataVBox.setVisible(true);
+                individualClientDataVBox.setManaged(true);
+                clientList.setVisible(false);
+                clientList.setManaged(false);
+            }
+        });
+        gameList.setOnMouseClicked(event -> { //click on a game
+            System.out.println("start");
+            Label selectedItem = (Label)(gameList.getSelectionModel().getSelectedItem());
+            System.out.println("after getting label");
+            if (selectedItem != null) {
+                System.out.println("before set text");
+                gameFocus.setText(selectedItem.getText());
+                System.out.println("after set text");
+                TA.setText((String)(selectedItem.getUserData()));
 
-    @FXML
-    public void TESTBUTTON() {
-        //REMOVE LATER: TESTING PURPOSES
-        individualClientDataVBox.setVisible(true);
-        individualClientDataVBox.setManaged(true);
-        clientList.setVisible(false);
-        clientList.setManaged(false);
+                System.out.println("clicked: "+selectedItem.getText());
+            }
+        });
     }
 
     @FXML

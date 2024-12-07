@@ -39,7 +39,6 @@ public class GamePlayGUIController implements Initializable {
     int portNum;
 
     public void initialize(URL location, ResourceBundle resources) {
-        //TODO add server stuff
         //limits the size of the game log scroll view
         rightSide.maxWidthProperty().bind(outerMostHBox.widthProperty().multiply(0.5));
         //for limiting the ante bet to two digits
@@ -68,8 +67,14 @@ public class GamePlayGUIController implements Initializable {
     }
 
 
-    @FXML //TODO Implement the handle for pushed the deal card button
+    @FXML
     public void handleDealCards() {
+        short ante = Short.parseShort(anteInputTextField.getText());
+        short pp = Short.parseShort(playPlusInputTextField.getText());
+        if(ante > 25 || ante < 5 ||
+             pp > 25 || (pp != 0 && pp < 5)) {
+            return;
+        }
         //hiding the deal button
         dealButtonContainer.setVisible(false);
         dealButtonContainer.setManaged(false);
@@ -84,23 +89,27 @@ public class GamePlayGUIController implements Initializable {
         clientSocket.send(new PokerInfo('D'));
         // Wait for clientSocket to have a hand
         while(true) {
-            System.out.println("Client Hand Dealt: "+clientSocket.dealtHand);
+            System.out.println("Client dealt hand: "+clientSocket.dealtHand);
             if(clientSocket.dealtHand) {
                 clientSocket.dealtHand = false;
                 break;
             }
         }
-        displayHands();
+        displayPlayerHand();
+        clientSocket.info.setValues(ante, pp);
     }
 
-    public void displayHands() {
-        // dC1.setImage(new Image(parseCardName(clientSocket.dealersHand.get(0))));
-        // dC2.setImage(new Image(parseCardName(clientSocket.dealersHand.get(1))));
-        // dC3.setImage(new Image(parseCardName(clientSocket.dealersHand.get(2))));
+    public void displayPlayerHand() {
         pC1.setImage(new Image(parseCardName(clientSocket.playersHand.get(0))));
         pC2.setImage(new Image(parseCardName(clientSocket.playersHand.get(1))));
         pC3.setImage(new Image(parseCardName(clientSocket.playersHand.get(2))));
         
+    }
+
+    public void displayDealerHand() {
+        dC1.setImage(new Image(parseCardName(clientSocket.dealersHand.get(0))));
+        dC2.setImage(new Image(parseCardName(clientSocket.dealersHand.get(1))));
+        dC3.setImage(new Image(parseCardName(clientSocket.dealersHand.get(2))));
     }
 
     public String parseCardName(String str) {
@@ -144,19 +153,20 @@ public class GamePlayGUIController implements Initializable {
 
     @FXML
     public void handleExitMenuItem() {
-        //TODO handling the exit with the server
         System.exit(0);
     }
 
     @FXML
     public void handlePlayHand() {
         //TODO implement playing the hand
-        pC1.setImage(new Image("/images/4ofH.png"));
+        System.out.println("Entered handlePlayHand()");
     }
 
     @FXML
     public void handleFoldHand() {
         //TODO implement folding the hand
+        System.out.println("Entered handleFoldHand()");
+        
     }
 
 

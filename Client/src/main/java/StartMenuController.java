@@ -44,6 +44,7 @@ public class StartMenuController implements Initializable{
                     //reference to controller for sending portnum and client
                     GamePlayGUIController controller = loader.getController();
                     controller.setData(portNum,clientSocket);
+                    controller.setAnteLabel();
                     stage.setScene(gameScene);
                     //break;
                // }

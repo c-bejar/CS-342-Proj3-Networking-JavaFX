@@ -4,8 +4,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.function.Consumer;
 
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -17,28 +19,17 @@ public class StartMenuController implements Initializable{
     @FXML Label reference;
     @FXML TextField portInput;
     static Client clientSocket;
+    static Consumer<Serializable> callback;
     static int portNum = 0;
 
     public void handleSwitchToGamePlay() {
         //TODO need to handle the server stuff with this as well
         try {
-            while(true) {
-                System.out.println("New Loop");
-                portNum = Integer.parseInt(portInput.getText());
-                clientSocket = new Client(portNum, data -> {
-                    Platform.runLater(() -> {
-                        //TODO maybe something with data
-                    });
-                });
-        
-                clientSocket.start();
-                
-                System.out.println("Client connected? "+clientSocket.isConnected);
-                if(!clientSocket.isConnected) {
-                    break;
-                }
-            }
-            System.out.println("Exited loop!");
+            portNum = Integer.parseInt(portInput.getText());
+            clientSocket = new Client(portNum, callback);
+            clientSocket.start();
+
+            //TODO stop execution if cant connect
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/GamePlayGUI.fxml"));
             Scene gameScene = new Scene(loader.load());

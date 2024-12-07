@@ -21,7 +21,7 @@ public class ServerMainMenuController implements Initializable {
     @FXML private Button onOffServer;
     @FXML private HBox sceneReference;
     @FXML private ListView clientList;
-    @FXML private ListView clientJoinLog;
+    @FXML private VBox clientJoinLog;
     @FXML private Label clientsLabel;
     public static Server serverConnection;
     public static int portNum = ServerStartMenuController.portNumber;
@@ -32,8 +32,9 @@ public class ServerMainMenuController implements Initializable {
         serverConnection = new Server(portNum, data -> {
             Platform.runLater(() -> {
                 System.out.println("Server Received: "+data.toString());
-                clientJoinLog.getItems().add(new Label(data.toString()));
-                clientsLabel.setText("Clients Connected: "+serverConnection.count);
+                if(true)
+                    clientJoinLog.getChildren().add(new Label(data.toString()));
+                clientsLabel.setText("Clients Connected: "+serverConnection.numClients);
             });
         });
     }

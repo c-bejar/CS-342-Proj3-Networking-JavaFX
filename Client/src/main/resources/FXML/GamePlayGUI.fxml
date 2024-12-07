@@ -12,6 +12,7 @@
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="GamePlayGUIController"
+      fx:id="root"
       styleClass="background"
       minWidth="400.0" minHeight="600.0"
       prefHeight="500.0" prefWidth="700.0"

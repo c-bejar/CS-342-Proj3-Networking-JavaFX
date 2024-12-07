@@ -10,6 +10,7 @@
 <HBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="ServerMainMenuController"
+      fx:id="sceneReference"
       minHeight="400" minWidth="600.0"
       spacing="20">
 
@@ -85,6 +86,7 @@
     <VBox>
         <!--button that will turn off the server-->
         <Button text="Deactivate Server"
+                fx:id="onOffServer"
                 onAction="#handleDeactivateServerButton"/>
         <!--text area that will keep a log of clients joining and leaving the server-->
         <ScrollPane>
@@ -98,7 +100,8 @@
         <Label text="Number of Clients: 0"
                 fx:id="clientsLabel"/>
         <!--button for closing the server and exiting the server panel-->
-        <Button text="Shutdown Server and Menu" onAction="#handleShutdownServerAndMenu"/>
+        <Button text="Shutdown Server and Menu"
+                onAction="#handleShutdownServerAndMenu"/>
 
 
     </VBox>

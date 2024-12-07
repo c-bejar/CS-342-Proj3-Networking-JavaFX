@@ -8,7 +8,7 @@ import java.util.function.Consumer;
 public class Client extends Thread{
     ArrayList<String> playersHand;
     ArrayList<String> dealersHand;
-    PokerInfo info = new PokerInfo('x');
+    PokerInfo info = new PokerInfo('X');
     boolean started = false;
     boolean dealtHand = false;
     boolean waiting = true;
@@ -58,6 +58,8 @@ public class Client extends Thread{
         }
         System.out.println("Before dealing dealer: "+dealersHand);
         System.out.println("Before dealing player: "+playersHand);
+        info.playerHand = playersHand;
+        info.dealerHand = dealersHand;
         dealersHand = dealerHand;
         playersHand = playerHand;
         dealtHand = true;

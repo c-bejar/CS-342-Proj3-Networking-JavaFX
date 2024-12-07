@@ -2,6 +2,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.net.ServerSocket;
+import java.lang.String;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.function.Consumer;
@@ -108,12 +109,56 @@ public class Server {
         public void fold() {//TODO
             System.out.println("command: Fold");
         }
-        public void play() {//TODO
+        public void play(PokerInfo data) {//TODO
             System.out.println("command: play");
+            ArrayList<String> dHand = data.dealerHand;
+            ArrayList<String> pHand = data.playerHand;
+
+            ArrayList<Card> dealHand = new ArrayList<>();
+            ArrayList<Card> playHand = new ArrayList<>();
+
+            for(int i = 0; i < 3; i++) {
+                String cardD = dHand.get(i);
+                String cardP = pHand.get(i);
+                char sD = cardD.charAt(0);
+                char sP = cardP.charAt(0);
+                int valD = getVal(cardD.charAt(1));
+                int valP = getVal(cardP.charAt(1));
+                dealHand.add(new Card(sD, valD));
+                playHand.add(new Card(sP, valP));
+            }
+
+            int result = ThreeCardLogic.compareHands(dealHand, playHand);
+            System.out.print("Dealer Cards: ");
+            for(Card c : dealHand) {
+                System.out.print(c.suit+" ");
+                System.out.print(c.value+" | ");
+            }
+            System.out.print("\nPlayer Cards: ");
+            for(Card c : playHand) {
+                System.out.print(c.suit+" ");
+                System.out.print(c.value+" | ");
+            }
+            System.out.println("\nDealer Hand in String: "+dHand);
+            System.out.println("Player Hand in String: "+pHand);
+            System.out.println("Dealer score: "+ThreeCardLogic.evalHand(dealHand));
+            System.out.println("Player score: "+ThreeCardLogic.evalHand(playHand));
+            System.out.println("Result of comparison: "+result);
         }
         public void ppWinnings() {//TODO
             System.out.println("command: ppWinnings");
             
+        }
+
+        public int getVal(char str) {
+            switch(str) {
+                case 'T': return 10;
+                case 'J': return 11;
+                case 'Q': return 12;
+                case 'K': return 13;
+                case 'A': return 14;
+                default: return (int)(str - '0');
+            }
         }
 
         void parseInputCommand(PokerInfo data) {
@@ -131,8 +176,8 @@ public class Server {
                 case 'F':
                     fold();
                     break;
-                case 'P':
-                    play();
+                case 'X':
+                    play(data);
                     break;
                 case 'B':
                     ppWinnings();
@@ -157,7 +202,7 @@ public class Server {
                     Object some = in.readObject();
 
                     if(some instanceof PokerInfo) {
-                        data = (PokerInfo)some;
+                        data = ((PokerInfo)some);
                     } else {
                         System.out.println("Unrecognized format");
                     }

@@ -46,18 +46,6 @@ public class GamePlayGUIController implements Initializable {
     int portNum;
 
     public void initialize(URL location, ResourceBundle resources) {
-        //TODO fix: after first ante selection, should stay the same
-        // while(true) {
-        //     if(!receivedConfirmation)
-        //         continue;
-        //     if(firstInstanceStarted && clientSocket.started) {
-        //         anteInputTextField.setDisable(true);
-        //         anteInputTextField.setText(Short.toString(clientSocket.info.anteBet));
-        //     }
-        //     if(clientSocket != null)
-        //         totalWinningsLabel.setText(Long.toString(clientSocket.info.winnings));
-        //     break;
-        // }
         //limits the size of the game log scroll view
         rightSide.maxWidthProperty().bind(outerMostHBox.widthProperty().multiply(0.5));
         //for limiting the ante bet to two digits
@@ -112,7 +100,7 @@ public class GamePlayGUIController implements Initializable {
         System.out.println("Sent command D");
         // Wait for clientSocket to have a hand
         while(true) {
-            System.out.println("Client dealt hand: "+clientSocket.dealtHand);
+            // System.out.println("Client dealt hand: "+clientSocket.dealtHand);
             if(clientSocket.dealtHand) {
                 clientSocket.dealtHand = false;
                 break;
@@ -185,6 +173,12 @@ public class GamePlayGUIController implements Initializable {
         //TODO implement playing the hand
         System.out.println("Entered handlePlayHand()");
         determinePPWinnings();
+        displayDealerHand();
+
+        clientSocket.info.dealerHand = clientSocket.dealersHand;
+        clientSocket.info.playerHand = clientSocket.playersHand;
+
+        clientSocket.send(clientSocket.info);
 
         wlScreen();
     }

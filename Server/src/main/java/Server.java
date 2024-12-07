@@ -24,7 +24,7 @@ public class Server {
         TheServer(int port) {
             this.port = port;
         }
-        
+
         public void run() {
             try(ServerSocket mySocket = new ServerSocket(port);) {
                 System.out.println("Server is waiting for a client!");

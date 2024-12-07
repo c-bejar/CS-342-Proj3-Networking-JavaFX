@@ -10,9 +10,9 @@ import java.io.IOException;
 
 //acts as a way to start server and input port number
 public class ServerStartMenuController implements Initializable {
-    @FXML VBox sceneReference;
-    @FXML TextField portNumberTF;
-    static int portNum = 0;
+
+    //FXML elements
+    @FXML VBox sceneReference; @FXML TextField portNumberTF;
 
     public void initialize(java.net.URL location, java.util.ResourceBundle resources) {
 
@@ -28,12 +28,6 @@ public class ServerStartMenuController implements Initializable {
 
             //TODO send port number to the Server Class
             //TODO check if valid post number before going to the next scene
-
-            portNum = Integer.parseInt(portNumberTF.getText());
-            System.out.println(portNum);
-            if(portNum < 0 || portNum > 9999) {
-                return;
-            }
 
             Stage stage = (Stage)(sceneReference.getScene().getWindow());
             stage.setScene(serverScene);

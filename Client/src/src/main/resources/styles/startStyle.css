@@ -1,0 +1,15 @@
+.title {
+    -fx-text-fill: #570000;
+    -fx-font-size: 40;
+    -fx-font-family: "Copperplate Gothic Bold";
+}
+.start-menu-button {
+    -fx-background-color: #570000;
+    -fx-text-fill: #f2f2f2;
+    -fx-min-width: 75;
+    -fx-min-height:50;
+    -fx-font-size: 20;
+}
+.background {
+    -fx-background-color: #294729;
+}

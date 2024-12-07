@@ -16,7 +16,6 @@ public class JavaFXTemplate extends Application {
 			Parent root = FXMLLoader.load(getClass().getResource("/FXML/start.fxml"));
 			primaryStage.setTitle("Three Card Poker [SERVER]");
 			Scene scene = new Scene(root, 800, 600);
-			scene.getStylesheets().add("/styles/server.css");
 
 			primaryStage.setScene(scene);
 			primaryStage.setResizable(false);

@@ -27,6 +27,7 @@ public class ServerMainMenuController implements Initializable {
     public static int portNum = ServerStartMenuController.portNumber;
 
     public void initialize(URL location, ResourceBundle resources) {
+        //creates the server
         System.out.println("Intitialized port: "+portNum);
         serverConnection = new Server(portNum, data -> {
             Platform.runLater(() -> {
@@ -48,23 +49,25 @@ public class ServerMainMenuController implements Initializable {
     }
 
     @FXML
-    public void handleBackToClientList() {
+    public void handleBackToClientList() {//changing chlient list and game list
         //TODO: implement unfocusing the client
         individualClientDataVBox.setVisible(false);
         individualClientDataVBox.setManaged(false);
         clientList.setVisible(true);
         clientList.setManaged(true);
     }
+
+
     @FXML
-    public void handleDeactivateServerButton() {
+    public void handleDeactivateServerButton() {//stops server connections and kicks off clients
         serverConnection.acceptingClients = !serverConnection.acceptingClients;
         if(onOffServer.getText().equals("Deactivate Server")) {
             onOffServer.setText("Activate Server");
         } else {
             onOffServer.setText("Deactivate Server");
         }
-
     }
+
     @FXML
     public void handleShutdownServerAndMenu() {
         // try {

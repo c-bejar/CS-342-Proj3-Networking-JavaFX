@@ -8,12 +8,12 @@ public class ThreeCardLogic {
 
         boolean flush = one.suit == two.suit && two.suit == three.suit;
         boolean straight = one.value == two.value+1 && two.value == three.value+1 ||
-                           one.value == two.value-1 && two.value == three.value-1;
+                one.value == two.value-1 && two.value == three.value-1;
         boolean threeOfAKind = one.value == two.value && two.value == three.value;
         boolean pair = one.value == two.value ||
-                       one.value == three.value ||
-                       two.value == three.value;
-        
+                one.value == three.value ||
+                two.value == three.value;
+
         if(straight && flush) {
             return 1;
         }

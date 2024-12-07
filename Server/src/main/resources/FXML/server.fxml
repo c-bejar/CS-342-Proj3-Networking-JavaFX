@@ -52,9 +52,9 @@
                 <Label text = "Past Games"/>
                 <!--List view containing references to stats of each game played-->
                 <ListView>
-                  <Label text="RANDOM TEXT">
-                    <!--TODO: implement adding items to this listview-->
-                  </Label>
+                    <Label text="RANDOM TEXT">
+                        <!--TODO: implement adding items to this listview-->
+                    </Label>
                 </ListView>
             </VBox>
 
@@ -90,15 +90,15 @@
                 onAction="#handleDeactivateServerButton"/>
         <!--text area that will keep a log of clients joining and leaving the server-->
         <ScrollPane>
-        <content>
-          <ListView fx:id="clientJoinLog">
-            <!-- Add clients programatically with labels -->
-          </ListView>
-        </content>
+            <content>
+                <ListView fx:id="clientJoinLog">
+                    <!-- Add clients programatically with labels -->
+                </ListView>
+            </content>
         </ScrollPane>
         <!--Label for readability-->
         <Label text="Number of Clients: 0"
-                fx:id="clientsLabel"/>
+               fx:id="clientsLabel"/>
         <!--button for closing the server and exiting the server panel-->
         <Button text="Shutdown Server and Menu"
                 onAction="#handleShutdownServerAndMenu"/>

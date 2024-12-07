@@ -46,18 +46,6 @@ public class GamePlayGUIController implements Initializable {
     int portNum;
 
     public void initialize(URL location, ResourceBundle resources) {
-        //TODO fix: after first ante selection, should stay the same
-        // while(true) {
-        //     if(!receivedConfirmation)
-        //         continue;
-        //     if(firstInstanceStarted && clientSocket.started) {
-        //         anteInputTextField.setDisable(true);
-        //         anteInputTextField.setText(Short.toString(clientSocket.info.anteBet));
-        //     }
-        //     if(clientSocket != null)
-        //         totalWinningsLabel.setText(Long.toString(clientSocket.info.winnings));
-        //     break;
-        // }
         //limits the size of the game log scroll view
         rightSide.maxWidthProperty().bind(outerMostHBox.widthProperty().multiply(0.5));
         //for limiting the ante bet to two digits
@@ -82,18 +70,12 @@ public class GamePlayGUIController implements Initializable {
             }
             return null; // Reject change if invalid
         }));
-       // System.out.println("clientSocket: " + clientSocket.port);
+        // System.out.println("clientSocket: " + clientSocket.port);
     }
 
 
-    @FXML
+    @FXML //TODO Implement the handle for pushed the deal card button
     public void handleDealCards() {
-        short ante = Short.parseShort(anteInputTextField.getText());
-        short pp = Short.parseShort(playPlusInputTextField.getText());
-        if(ante > 25 || ante < 5 ||
-             pp > 25 || (pp != 0 && pp < 5)) {
-            return;
-        }
         //hiding the deal button
         dealButtonContainer.setVisible(false);
         dealButtonContainer.setManaged(false);
@@ -112,7 +94,7 @@ public class GamePlayGUIController implements Initializable {
         System.out.println("Sent command D");
         // Wait for clientSocket to have a hand
         while(true) {
-            System.out.println("Client dealt hand: "+clientSocket.dealtHand);
+            System.out.println("Client Hand Dealt: "+clientSocket.dealtHand);
             if(clientSocket.dealtHand) {
                 clientSocket.dealtHand = false;
                 break;
@@ -123,17 +105,14 @@ public class GamePlayGUIController implements Initializable {
         clientSocket.info.setValues(ante, pp);
     }
 
-    public void displayPlayerHand() {
+    public void displayHands() {
+        // dC1.setImage(new Image(parseCardName(clientSocket.dealersHand.get(0))));
+        // dC2.setImage(new Image(parseCardName(clientSocket.dealersHand.get(1))));
+        // dC3.setImage(new Image(parseCardName(clientSocket.dealersHand.get(2))));
         pC1.setImage(new Image(parseCardName(clientSocket.playersHand.get(0))));
         pC2.setImage(new Image(parseCardName(clientSocket.playersHand.get(1))));
         pC3.setImage(new Image(parseCardName(clientSocket.playersHand.get(2))));
-        
-    }
 
-    public void displayDealerHand() {
-        dC1.setImage(new Image(parseCardName(clientSocket.dealersHand.get(0))));
-        dC2.setImage(new Image(parseCardName(clientSocket.dealersHand.get(1))));
-        dC3.setImage(new Image(parseCardName(clientSocket.dealersHand.get(2))));
     }
 
     public String parseCardName(String str) {
@@ -177,6 +156,7 @@ public class GamePlayGUIController implements Initializable {
 
     @FXML
     public void handleExitMenuItem() {
+        //TODO handling the exit with the server
         System.exit(0);
     }
 
@@ -191,6 +171,7 @@ public class GamePlayGUIController implements Initializable {
 
     @FXML
     public void handleFoldHand() {
+        System.out.println("Fold hand Pressed");
         //TODO implement folding the hand
         System.out.println("Entered handleFoldHand()");
         clientSocket.info.winnings -= clientSocket.info.anteBet;

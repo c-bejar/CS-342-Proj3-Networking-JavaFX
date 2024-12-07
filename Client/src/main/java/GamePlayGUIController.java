@@ -7,8 +7,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+import java.io.Serializable;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.function.Consumer;
 
 public class GamePlayGUIController implements Initializable {
     @FXML Label totalWinningsLabel;
@@ -31,6 +33,9 @@ public class GamePlayGUIController implements Initializable {
 
     //for changing style sheets
     boolean s1 = true;
+    Client clientSocket;
+    Consumer<Serializable> callback;
+    int portNum;
 
     public void initialize(URL location, ResourceBundle resources) {
         //TODO add server stuff
@@ -58,6 +63,7 @@ public class GamePlayGUIController implements Initializable {
             }
             return null; // Reject change if invalid
         }));
+       // System.out.println("clientSocket: " + clientSocket.port);
     }
 
 
@@ -71,8 +77,18 @@ public class GamePlayGUIController implements Initializable {
         anteInputTextField.setDisable(true);
         playPlusInputTextField.setDisable(true);
 
-        
+        System.out.println("Deal Cards Pressed");
+        //clientSocket.send(new PokerInfo('D',Short.valueOf(anteInputTextField.getText()),Short.valueOf(playPlusInputTextField.getText())));
+        clientSocket.send(new PokerInfo('D'));
+        System.out.println("done sending deal cards command");
     }
+
+    public void setData(int port, Client clientSocket) {
+        System.out.println("inside of setData:" + port);
+        this.portNum = port;
+        this.clientSocket = clientSocket;
+    }
+
 
     @FXML //TODO Implement the handle for fresh start through the menu
     public void handleFreshStartMenuItem() {

@@ -32,7 +32,7 @@ public class ServerMainMenuController implements Initializable {
         serverConnection = new Server(portNum, data -> {
             Platform.runLater(() -> {
                 System.out.println("Server Received: "+data.toString());
-                if(true)
+                if(data.toString().endsWith("Server"))
                     clientJoinLog.getChildren().add(new Label(data.toString()));
                 clientsLabel.setText("Clients Connected: "+serverConnection.numClients);
             });

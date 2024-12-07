@@ -1,10 +1,10 @@
 import java.io.Serializable;
 
 public class PokerInfo implements Serializable{
-      char command; //either W,L,or,''
+    char command; //either W,L,or,''
 //    long winnings; //the winnings that will be sent to the client
 //
-//    //can contain card info represented by two chars (rank,suit)ex: 4H = 4 of hearts, full hand = 2D6H0C = 2 of diamonds, 6 of hearts, 10 of clubs
+//    can contain card info represented by two chars (rank,suit)ex: 4H = 4 of hearts, full hand = 2D6H0C = 2 of diamonds, 6 of hearts, 10 of clubs
 //    String hand;
 
     //can contain messages of what is going on(player lost) ex "player lost to the dealer"
@@ -25,6 +25,4 @@ public class PokerInfo implements Serializable{
     PokerInfo(char command) {
         this.command = command;
     }
-
-
 }

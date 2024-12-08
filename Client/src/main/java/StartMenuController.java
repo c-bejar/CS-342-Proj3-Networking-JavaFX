@@ -51,6 +51,7 @@ public class StartMenuController implements Initializable{
             controller.setAnteLabel();
             controller.setGameNum(gameNum);
             controller.setArray(logs);
+            controller.setLogs();
             stage.setScene(gameScene);
             //break;
             // }

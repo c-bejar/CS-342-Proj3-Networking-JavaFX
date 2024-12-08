@@ -6,26 +6,17 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+import java.awt.event.ActionListener;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class GamePlayGUIController implements Initializable {
-    @FXML Label totalWinningsLabel;
-    @FXML TextField anteInputTextField;
-    @FXML Label playBetLabel;
-    @FXML TextField playPlusInputTextField;
-    @FXML VBox rightSide;
-    @FXML HBox outerMostHBox;
-    @FXML VBox dealButtonContainer;
+    @FXML Label totalWinningsLabel; @FXML TextField anteInputTextField;
+    @FXML Label playBetLabel; @FXML TextField playPlusInputTextField;
+    @FXML VBox rightSide; @FXML HBox outerMostHBox; @FXML VBox dealButtonContainer;
     @FXML VBox playAndFoldHandButtonsContainer;
-    @FXML ImageView pC1;
-    @FXML ImageView pC2;
-    @FXML ImageView pC3;
-    @FXML ImageView dC1;
-    @FXML ImageView dC2;
-    @FXML ImageView dC3;
-
-    int portNum = StartMenuController.portNum;
+    @FXML ImageView pC1; @FXML ImageView pC2; @FXML ImageView pC3;
+    @FXML ImageView dC1; @FXML ImageView dC2; @FXML ImageView dC3;
 
     //for changing style sheets
     boolean s1 = true;
@@ -55,6 +46,9 @@ public class GamePlayGUIController implements Initializable {
             }
             return null; // Reject change if invalid
         }));
+
+
+
     }
 
 
@@ -67,6 +61,7 @@ public class GamePlayGUIController implements Initializable {
         playAndFoldHandButtonsContainer.setManaged(true);
         anteInputTextField.setDisable(true);
         playPlusInputTextField.setDisable(true);
+        //
 
 
     }

@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -8,6 +10,8 @@ public class EndScreenController {
     @FXML VBox root;
 
     Client clientSocket;
+    int gameNum;
+    ArrayList<ArrayList<String>> logs;
 
     public void handleRetry() {
         System.out.println("Attempting retry!");
@@ -21,6 +25,8 @@ public class EndScreenController {
             controller.setClient(clientSocket);
             controller.setAnteLabel();
             controller.updateWinningsLabel();
+            controller.setGameNum(++gameNum);
+            controller.setArray(logs);
             stage.setScene(gameScene);
         } catch(Exception e) {
             e.printStackTrace();
@@ -31,7 +37,18 @@ public class EndScreenController {
         System.exit(0);
     }
 
+    // used outside of this file
     public void setClient(Client clientSocket) {
         this.clientSocket = clientSocket;
+    }
+
+    // used outside of this file
+    public void setGameNum(int gameNum) {
+        this.gameNum = gameNum;
+    }
+
+    // used outside of this file
+    public void setArray(ArrayList<ArrayList<String>> logs) {
+        this.logs = logs;
     }
 }

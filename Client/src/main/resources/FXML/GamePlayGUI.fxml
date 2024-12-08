@@ -75,6 +75,10 @@
                     </HBox>
                 </VBox>
 
+                <VBox alignment="CENTER" fx:id="continueContainer" visible="false" managed="false">
+                    <Button text="Continue" onAction="#handleContinue" styleClass="handle-button"/>
+                </VBox>
+
             </HBox>
 
             <!--HBox containing the player cards-->
@@ -101,10 +105,10 @@
 
             <!--scrollPane which will document what is going on within the game-->
             <!--TODO implement the scroll pane game log-->
-            <ScrollPane VBox.vgrow="ALWAYS" fx:id="gameDescriptionBox" prefHeight="500" styleClass="scroll-pane">
+            <ScrollPane VBox.vgrow="ALWAYS" prefHeight="500" styleClass="scroll-pane">
                 <content>
-                    <!-- Your content here, for example, a Label -->
-                    <Label text="This is inside the ScrollPane" />
+                    <VBox fx:id="gameDescriptionBox">
+                    </VBox>
                 </content>
             </ScrollPane>
 

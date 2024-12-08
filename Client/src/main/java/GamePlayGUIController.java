@@ -44,6 +44,8 @@ public class GamePlayGUIController implements Initializable {
     static boolean firstInstanceStarted = false;
     static boolean receivedConfirmation = false;
 
+    char endType = 'L';
+
     Client clientSocket;
     Consumer<Serializable> callback;
     int portNum;
@@ -213,9 +215,9 @@ public class GamePlayGUIController implements Initializable {
         }
 
         switch(clientSocket.info.winResult) {
-            case 1: clientSocket.info.winnings -= clientSocket.info.anteBet; break;
-            case 2: clientSocket.info.winnings += clientSocket.info.anteBet; break;
-            default: break;
+            case 1: clientSocket.info.winnings -= clientSocket.info.anteBet;endType = 'L'; break;
+            case 2: clientSocket.info.winnings += clientSocket.info.anteBet;endType = 'W'; break;
+            default: endType = 'T';break;
         }
         clientSocket.info.winResult = -1;
 
@@ -235,6 +237,7 @@ public class GamePlayGUIController implements Initializable {
         // clientSocket.info.winnings -= clientSocket.info.PPbet;
 
         clientSocket.send(new PokerInfo('F'));
+        endType = 'L';
 
         System.out.println("Client winnings: "+clientSocket.info.winnings);
         playAndFoldHandButtonsContainer.setVisible(false);
@@ -252,7 +255,7 @@ public class GamePlayGUIController implements Initializable {
             Stage stage = (Stage) (root.getScene().getWindow());
 
             EndScreenController controller = loader.getController();
-            controller.setClient(clientSocket);
+            controller.setClient(clientSocket,endType);
             controller.setArray(logs);
             stage.setScene(gameScene);
         } catch(Exception e) {}

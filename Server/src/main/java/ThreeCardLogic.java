@@ -59,14 +59,14 @@ public class ThreeCardLogic {
     public static int compareHands(ArrayList<Card> dealer, ArrayList<Card> player) {
         int dealerScore = evalHand(dealer);
         int playerScore = evalHand(player);
-        if(playerScore == 0) {
-            playerScore = 6;
-        }
         if(dealerScore == 0) {
-            dealerScore = 6;
-            if(dealer.get(2).value < 12)) {
+            if(dealer.get(2).value < 12) {
                 return 0;
             }
+            dealerScore = 6;
+        }
+        if(playerScore == 0) {
+            playerScore = 6;
         }
 
         if(playerScore < dealerScore) {

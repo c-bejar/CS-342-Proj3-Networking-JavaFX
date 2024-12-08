@@ -13,9 +13,9 @@
       prefHeight="400.0" prefWidth="600.0"
       alignment="CENTER" spacing="30"
       styleClass="background">
-    <Label text="Placeholder"/>
-    <Button text="Next Game"
+    <Label fx:id = "gameStatus"/>
+    <Button text="Next Game" fx:id="nextButton"
             onAction="#handleRetry"/>
-    <Button text="Exit"
+    <Button text="Exit" fx:id="exitButton"
             onAction="#handleExit"/>
 </VBox>

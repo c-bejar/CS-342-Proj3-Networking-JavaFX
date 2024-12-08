@@ -6,6 +6,7 @@ import javafx.fxml.Initializable;
 import java.io.IOException;
 import java.io.Serializable;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.function.Consumer;
 
@@ -21,6 +22,9 @@ public class StartMenuController implements Initializable{
     Client clientSocket;
     static Consumer<Serializable> callback;
     int portNum = 0;
+    int gameNum = 1;
+
+    ArrayList<ArrayList<String>> logs = new ArrayList<>();
 
     public void handleSwitchToGamePlay() {
         //TODO need to handle the server stuff with this as well
@@ -45,6 +49,9 @@ public class StartMenuController implements Initializable{
             GamePlayGUIController controller = loader.getController();
             controller.setData(portNum,clientSocket);
             controller.setAnteLabel();
+            controller.setGameNum(gameNum);
+            controller.setArray(logs);
+            controller.setLogs();
             stage.setScene(gameScene);
             //break;
             // }

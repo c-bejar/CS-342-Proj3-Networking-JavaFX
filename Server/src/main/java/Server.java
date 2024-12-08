@@ -152,7 +152,7 @@ public class Server {
             });
             System.out.println("end in fold()");
         }
-        public void play(PokerInfo data) {//TODO
+        public void play(PokerInfo data) {
             System.out.println("command: play");
             ArrayList<String> dHand = data.dealerHand;
             ArrayList<String> pHand = data.playerHand;
@@ -172,25 +172,27 @@ public class Server {
             }
 
             int result = ThreeCardLogic.compareHands(dealHand, playHand);
-            System.out.print("Dealer Cards: ");
-            for(Card c : dealHand) {
-                System.out.print(c.suit+" ");
-                System.out.print(c.value+" | ");
-            }
-            System.out.print("\nPlayer Cards: ");
-            for(Card c : playHand) {
-                System.out.print(c.suit+" ");
-                System.out.print(c.value+" | ");
-            }
-            System.out.println("\nDealer Hand in String: "+dHand);
-            System.out.println("Player Hand in String: "+pHand);
-            System.out.println("Dealer score: "+ThreeCardLogic.evalHand(dealHand));
-            System.out.println("Player score: "+ThreeCardLogic.evalHand(playHand));
-            System.out.println("Result of comparison: "+result);
+            try {
+                out.writeObject(Integer.toString(result));
+            } catch(Exception e) {}
         }
-        public void ppWinnings() {//TODO
+
+        public void ppWinnings(PokerInfo data) {//TODO
             System.out.println("command: ppWinnings");
-            
+            short pp = data.PPbet;
+            ArrayList<String> pHand = data.playerHand;
+            ArrayList<Card> playHand = new ArrayList<>();
+
+            for(int i = 0; i < 3; i++) {
+                String card = pHand.get(i);
+                char s = card.charAt(0);
+                int val = getVal(card.charAt(1));
+                playHand.add(new Card(s, val));
+            }
+            int betWinnings = ThreeCardLogic.evalPPWinnings(playHand, pp);
+            try {
+                out.writeObject(betWinnings);
+            } catch(Exception e) {}
         }
 
         public int getVal(char str) {
@@ -223,7 +225,7 @@ public class Server {
                     play(data);
                     break;
                 case 'B':
-                    ppWinnings();
+                    ppWinnings(data);
                     break;
                 default: System.out.println("invalid command");
             }

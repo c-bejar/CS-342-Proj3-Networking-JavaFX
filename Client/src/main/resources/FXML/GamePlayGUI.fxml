@@ -31,14 +31,11 @@
 
     <!--HBox containing the two sides of the UI-->
     <HBox alignment="CENTER" fx:id="outerMostHBox" spacing="10">
-
         <padding>
             <Insets top="10" right="20" bottom="10" left="20"/>
         </padding>
-
         <!--Left Side with Cards and deal button-->
         <VBox alignment="CENTER" HBox.hgrow="ALWAYS" spacing="30">
-
             <!--containing the dealers cards as images and label for dealer-->
             <!--Above Deal button -->
             <VBox>
@@ -57,7 +54,6 @@
                 <!--label for the dealer-->
                 <Label text = "Dealer" alignment="TOP_LEFT" styleClass="card-labels"/>
             </VBox>
-
             <!--HBox for the setup of the deal button and labels-->
             <!--Between the two hands-->
             <!--Switches between the deal button and the choice buttons of deal and fold-->
@@ -66,7 +62,6 @@
                 <VBox alignment="CENTER" fx:id="dealButtonContainer">
                     <Button text = "Deal" onAction="#handleDealCards" styleClass="deal-button"/>
                 </VBox>
-
                 <!--Play and Fold hand button container-->
                 <VBox alignment="CENTER" fx:id="playAndFoldHandButtonsContainer" visible="false" managed="false">
                     <HBox alignment="CENTER" spacing="10">
@@ -74,9 +69,10 @@
                         <Button text = "Fold" onAction="#handleFoldHand" styleClass="handle-button"/><!--Fold Button-->
                     </HBox>
                 </VBox>
-
+                <VBox alignment="CENTER" fx:id="continueContainer" visible="false" managed="false">
+                    <Button text="Continue" onAction="#handleContinue" styleClass="handle-button"/>
+                </VBox>
             </HBox>
-
             <!--HBox containing the player cards-->
             <!--Below Deal Button -->
             <VBox>
@@ -93,21 +89,17 @@
                     </ImageView>
                 </HBox>
             </VBox>
-
         </VBox>
-
         <!--Right Side containing the textbox and bets-->
         <VBox alignment="CENTER" HBox.hgrow="ALWAYS" fx:id="rightSide" spacing="10" >
-
             <!--scrollPane which will document what is going on within the game-->
             <!--TODO implement the scroll pane game log-->
-            <ScrollPane VBox.vgrow="ALWAYS" fx:id="gameDescriptionBox" prefHeight="500" styleClass="scroll-pane">
+            <ScrollPane VBox.vgrow="ALWAYS" prefHeight="500" styleClass="scroll-pane">
                 <content>
-                    <!-- Your content here, for example, a Label -->
-                    <Label text="This is inside the ScrollPane" />
+                    <VBox fx:id="gameDescriptionBox">
+                    </VBox>
                 </content>
             </ScrollPane>
-
             <!--HBox containing the labels telling the user various gameplay stats-->
             <HBox VBox.vgrow="ALWAYS" spacing = "10">
                 <!--HBox containing labels and inputs for bets and winnings-->
@@ -120,7 +112,6 @@
                         <Label text = "Pair Plus Bet:" styleClass="label-color-1"/>
                         <Label text = "Play Bet:" styleClass="label-color-1"/>
                     </VBox>
-
                     <!--VBox with labels and input text fields telling the values of the bets and earnings-->
                     <!--DYNAMIC-->
                     <VBox HBox.hgrow="ALWAYS" spacing="4">
@@ -129,9 +120,7 @@
                         <TextField text = "0" fx:id="playPlusInputTextField" maxWidth="30"/>
                         <Label fx:id="playBetLabel" text = "0" styleClass="label-color-1"/>
                     </VBox>
-
                 </HBox>
-
                 <!--HBox containing info pertaining to pair plus wagers-->
                 <!--CONSTANT-->
                 <HBox HBox.hgrow="ALWAYS">
@@ -143,7 +132,6 @@
                         <Label text = "Flush" styleClass="label-color-1"/>
                         <Label text = "Pair" styleClass="label-color-1"/>
                     </VBox>
-
                     <!--Vbox containing the labels denoting the winning amounts of pair plus bets-->
                     <VBox HBox.hgrow="ALWAYS">
                         <Label text = "40-1" styleClass="label-color-1"/>
@@ -152,14 +140,8 @@
                         <Label text = "3-1" styleClass="label-color-1"/>
                         <Label text = "1-1" styleClass="label-color-1"/>
                     </VBox>
-
                 </HBox>
-
             </HBox>
-
         </VBox>
-
     </HBox>
-
-
 </VBox>

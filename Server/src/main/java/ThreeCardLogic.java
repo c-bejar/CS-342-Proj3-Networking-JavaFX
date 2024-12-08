@@ -61,8 +61,12 @@ public class ThreeCardLogic {
         int playerScore = evalHand(player);
         if(playerScore == 0) {
             playerScore = 6;
-        }else if(dealerScore == 0) {
+        }
+        if(dealerScore == 0) {
             dealerScore = 6;
+            if(dealer.get(2).value < 12)) {
+                return 0;
+            }
         }
 
         if(playerScore < dealerScore) {
@@ -73,7 +77,7 @@ public class ThreeCardLogic {
         }
         if(playerScore == dealerScore){
             // If flush [same suits] or Highest Card
-            if(playerScore == 2 || playerScore == 0) {
+            if(playerScore == 2 || playerScore == 6) {
                 // evaluate last card in sorted hand
                 if(player.get(2).value > dealer.get(2).value) {
                     return 2;

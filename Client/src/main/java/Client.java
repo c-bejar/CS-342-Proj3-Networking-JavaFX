@@ -68,6 +68,7 @@ public class Client extends Thread{
     }
 
     public void determineWinner(String data) {
+        System.out.println("in determineWinner()");
         info.winResult = Integer.parseInt(data);
     }
 
@@ -81,7 +82,9 @@ public class Client extends Thread{
             } else if(data.length() == 1) {
                 determineWinner(data);
             }
-        } catch(Exception e) {}
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void receiveInt(Object in) {

@@ -221,23 +221,28 @@ public class GamePlayGUIController implements Initializable {
 
         ArrayList<String> d = clientSocket.dealersHand;
         ArrayList<String> p = clientSocket.playersHand;
+        playBetLabel.setText(Short.toString(clientSocket.info.anteBet));
 
-        clientSocket.send(new PokerInfo('X', p, d));
+        clientSocket.send(new PokerInfo('X', p, d, clientSocket.info.anteBet, 
+                                                           clientSocket.info.PPbet,
+                                                           clientSocket.info.winnings));
 
         while(true) {
-            if(clientSocket.info.winResult > -1)
+            if(clientSocket.info.winResult != -1)
                 break;
         }
         
         switch(clientSocket.info.winResult) {
             case 1: determinePPWinnings(p);
-                    clientSocket.info.winnings -= clientSocket.info.anteBet;
-                    currGame.add("Player lost to Dealer: -"+clientSocket.info.anteBet);
+                    clientSocket.info.winnings -= clientSocket.info.anteBet * 2;
+                    currGame.add("Player lost to Dealer: Play Bet: -"+clientSocket.info.anteBet);
+                    currGame.add("Player lost to Dealer: Ante: -"+clientSocket.info.anteBet);
                     endType = 'L';
                     break;
             case 2: determinePPWinnings(p);
-                    clientSocket.info.winnings += clientSocket.info.anteBet;
-                    currGame.add("Player won against Dealer: +"+clientSocket.info.anteBet);
+                    clientSocket.info.winnings += clientSocket.info.anteBet * 2;
+                    currGame.add("Player won against Dealer: Play Bet: +"+clientSocket.info.anteBet);
+                    currGame.add("Player won against Dealer: Ante: +"+clientSocket.info.anteBet);
                     endType = 'W';
                     break;
             default: currGame.add("Dealer does not have at least a Queen High.\nReturning Pair Plus...");
@@ -265,7 +270,9 @@ public class GamePlayGUIController implements Initializable {
         currGame.add("Player Folded: Ante -"+clientSocket.info.anteBet);
         updateLog();
         
-        clientSocket.send(new PokerInfo('F'));
+        clientSocket.send(new PokerInfo('F', clientSocket.info.anteBet,
+                                                     clientSocket.info.PPbet,
+                                                     clientSocket.info.winnings));
         endType = 'L';
 
         System.out.println("Client winnings: "+clientSocket.info.winnings);
@@ -306,6 +313,7 @@ public class GamePlayGUIController implements Initializable {
         if(!atLeastQueenHigh) {
             anteInputTextField.setDisable(true);
             anteInputTextField.setText(Short.toString(clientSocket.info.anteBet));
+            playBetLabel.setText(Short.toString(clientSocket.info.anteBet));
         }
     }
 

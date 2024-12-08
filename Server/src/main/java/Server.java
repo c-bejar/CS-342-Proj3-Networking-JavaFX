@@ -110,7 +110,7 @@ public class Server {
             System.out.println("command: Deal");
 
             gameNum += 1;
-          
+
             dealer.dealersHand = dealer.dealHand();
             player.hand = dealer.dealHand();
             System.out.println("dealt new hand");
@@ -133,17 +133,18 @@ public class Server {
         public void endGame() {//TODO
             System.out.println("command: endGame");
         }
-        public void fold() {//TODO
+        public void fold(PokerInfo data) {//TODO
             System.out.println("start in fold()");
             Platform.runLater(() -> {
                 System.out.println("in fold run later");
                 Label temp = new Label("Game: " + gameNum);
-                String tempString = "Ante Bet: 5\n" +
-                        "PairPlus Bet: 20\n" +
-                        "Action: Fold\n" +
-                        "OutCome: Lost\n" +
-                        "Total Winnings Change: -25\n" +
-                        "New Total Winnings: 40";
+                String tempString = "Ante Bet: " + data.anteBet +
+                        "\nPlay Bet: 0" + 
+                        "\nPairPlus Bet: " + data.PPbet +
+                        "\nAction: Fold" +
+                        "\nOutCome: Lost" +
+                        "\nTotal Winnings Change: " + (-data.anteBet - data.PPbet) +
+                        "\nNew Total Winnings: " + data.winnings;
                 System.out.println("before set user data");
                 temp.setUserData(tempString);
                 System.out.println("before add to displayGames");
@@ -170,8 +171,44 @@ public class Server {
                 dealHand.add(new Card(sD, valD));
                 playHand.add(new Card(sP, valP));
             }
-
+            player.hand = playHand;
+            dealer.dealersHand = dealHand;
+            short pp = data.PPbet;
             int result = ThreeCardLogic.compareHands(dealHand, playHand);
+            Platform.runLater(() -> {
+                int ppWinnings;
+                if(pp == 0) {
+                    ppWinnings = 0;
+                } else {
+                    ppWinnings = ThreeCardLogic.evalPPWinnings(playHand, pp);
+                    if(ppWinnings == 0) {
+                        ppWinnings = -pp;
+                    }
+                }
+                System.out.println("in play run later");
+                Label temp = new Label("Game: " + gameNum);
+                String tempString = "Ante Bet: " + data.anteBet + "\nPlay Bet: " + data.anteBet + 
+                        "\nPairPlus Bet: " + data.PPbet  + "\nAction: Play" + "\nOutCome: ";
+                if(result == 1) {
+                    tempString += "Lost\nTotal Winnings Change: " + (-(data.anteBet * 2) + ppWinnings)  + 
+                    "\nNew Total Winnings:" + (data.winnings + (-(data.anteBet * 2) + ppWinnings));
+                }
+                else if(result == 2) {
+                    tempString += ("Won" + "\nTotal Winnings Change: " + ((data.anteBet * 2) + ppWinnings)) + 
+                    "\nNew Total Winnings:" + (data.winnings + ((data.anteBet * 2) + ppWinnings));
+                }
+                else {
+                    tempString += "Tied" + "\nTotal Winnings Change: 0" + "\nNew Total Winnings:" + data.winnings;
+                }
+                // tempString += "\nNew Total Winnings:" + data.winnings;
+                System.out.println("before set user data");
+                temp.setUserData(tempString);
+                System.out.println("before add to displayGames");
+                displayGames.add(temp);
+                System.out.println("after add to displayGames");
+            });
+
+
             try {
                 out.writeObject(Integer.toString(result));
             } catch(Exception e) {}
@@ -219,7 +256,7 @@ public class Server {
                     endGame();
                     break;
                 case 'F':
-                    fold();
+                    fold(data);
                     break;
                 case 'X':
                     play(data);

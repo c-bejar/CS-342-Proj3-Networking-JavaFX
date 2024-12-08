@@ -70,6 +70,7 @@ public class Client extends Thread{
     public void determineWinner(String data) {
         System.out.println("in determineWinner()");
         info.winResult = Integer.parseInt(data);
+        System.out.println("out of determineWinner()");
     }
 
     // Call different functions depending on what command is sent to Client
@@ -116,6 +117,7 @@ public class Client extends Thread{
 
             while(true) {
                 PokerInfo data = null;
+                System.out.println("Starting to read something new!");
                 Object some = in.readObject();
                 dataRead = true;
                 if (some instanceof PokerInfo) {

@@ -24,10 +24,21 @@ public class PokerInfo implements Serializable {
         PPbet = pp;
     }
 
-    PokerInfo(char command, ArrayList<String> p, ArrayList<String> d) {
+    PokerInfo(char command, short ante, short pp, long winnings) {
+        this.command = command;
+        anteBet = ante;
+        PPbet = pp;
+        this.winnings = winnings;
+    }
+
+    PokerInfo(char command, ArrayList<String> p, ArrayList<String> d,
+              short ante, short pp, long winnings) {
         this.command = command;
         playerHand = p;
         dealerHand = d;
+        anteBet = ante;
+        PPbet = pp;
+        this.winnings = winnings;
     }
 
     PokerInfo(char command, ArrayList<String> p, short pp) {

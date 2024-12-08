@@ -11,7 +11,7 @@ public class Client extends Thread{
     PokerInfo info = new PokerInfo('X');
     boolean started = false;
     boolean dealtHand = false;
-    boolean waiting = true;
+    boolean receivedPP = false;
     public Socket socketClient;
     public int port;
     private Consumer<Serializable> callback;
@@ -67,6 +67,10 @@ public class Client extends Thread{
         System.out.println("Finished creating arrays for hands");
     }
 
+    public void determineWinner(String data) {
+        info.winResult = Integer.parseInt(data);
+    }
+
     // Call different functions depending on what command is sent to Client
     public void receiveString(Object in) {
         try {
@@ -74,8 +78,17 @@ public class Client extends Thread{
             System.out.println("data size: "+data.length());
             if(data.length() == 13) {
                 receiveHands(data);
+            } else if(data.length() == 1) {
+                determineWinner(data);
             }
         } catch(Exception e) {}
+    }
+
+    public void receiveInt(Object in) {
+        int data = (int)in;
+        info.ppWinnings = data;
+        receivedPP = true;
+        System.out.println("PPWinnings: "+data);
     }
 
     public void handleInput(PokerInfo data) {
@@ -109,6 +122,9 @@ public class Client extends Thread{
                 } else if(some instanceof String) {
                     System.out.println("String sent!");
                     receiveString(some);
+                } else if(some instanceof Integer) {
+                    System.out.println("Integer sent!");
+                    receiveInt(some);
                 }
             }
         } catch (Exception e) {

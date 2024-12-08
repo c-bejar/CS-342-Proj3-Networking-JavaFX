@@ -8,7 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class EndScreenController {
+public class EndScreenController{
     @FXML VBox root;
     @FXML Label gameStatus;
     @FXML Button nextButton;
@@ -18,7 +18,7 @@ public class EndScreenController {
     int gameNum;
     boolean atLeastQueenHigh;
     ArrayList<ArrayList<String>> logs;
-
+    
     public void handleRetry() {
         System.out.println("Attempting retry!");
         try {
